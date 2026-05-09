@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 
 
-export default function FaceChatSVG({ h, w, eyeSize = 7, eyeWidth = 5, color = "black", wink = false, alive = false }) {
+export default function FaceChatSVG({ h, w, eyeSize = 7, eyeWidth = 5, color = "white", wink = false, alive = false }) {
     const [winkRight, setWinkRight] = useState(false)
     const [winkLeft, setWinkLeft] = useState(false)
     const blinking = useRef(null)
@@ -50,7 +50,8 @@ export default function FaceChatSVG({ h, w, eyeSize = 7, eyeWidth = 5, color = "
                 <div style={{
                     height: eyeSize * (winkLeft ? 0.3 : 1),
                     width: eyeSize,
-                }} className={`bg-black z-[10] duration-${alive?"150":"300"} rounded-full`} />
+                    backgroundColor:color
+                }} className={`z-[10] duration-${alive?"150":"300"} rounded-full`} />
                 <div style={{
                     height: eyeSize,
                     width: eyeWidth / 2,
@@ -58,7 +59,8 @@ export default function FaceChatSVG({ h, w, eyeSize = 7, eyeWidth = 5, color = "
                 <div style={{
                     height: eyeSize * (winkRight ? 0.3 : 1),
                     width: eyeSize,
-                }} className={`bg-black z-[10] duration-${alive?"150":"300"} rounded-full`} />
+                    backgroundColor:color
+                }} className={`z-[10] duration-${alive?"150":"300"} rounded-full`} />
             </div>
         </div>
     )

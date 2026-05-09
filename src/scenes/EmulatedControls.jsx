@@ -1,101 +1,106 @@
-import { useEffect, useRef, useState } from "react"
+import { Suspense, lazy, useEffect, useRef, useState } from "react"
 import Pedals from "../components/Pedals"
-import Steering from "../components/Steering"
-import ArrowSVG from "../assets/ArrowSVG"
+import ArrowSVG from "../components/componentassets/ArrowSVG"
 
-
+const Spline = lazy(() => import('@splinetool/react-spline'))
 
 export default function EmulatedControls() {
-    const [steer, setSteer] = useState(0)
+  const [steer, setSteer] = useState(0)
+  const intervalID = useRef(null)
+  const timeGap = 30
+  const smallestGap = 2
 
-    const intervalID = useRef(null)
-    const timeGap = 30
-    const smallestGap = 2
-    useEffect(() => {
-        clearInterval(intervalID.current)
-        const delay = timeGap - (Math.abs(steer) * timeGap)
+  useEffect(() => {
+    clearInterval(intervalID.current)
+    const delay = timeGap - Math.abs(steer) * timeGap
 
-        console.log("Stereing:", steer)
-        console.log("Int:", delay)
-        if (steer == 0) return
-        else if (steer < 0) {
-            intervalID.current = setInterval(() => {
-                holdKey("ArrowLeft")
-                setTimeout(() => {
-                    releaseKey("ArrowLeft")
-                    releaseKey("ArrowRight")
-                }, smallestGap + 2)
-            }, delay > smallestGap ? delay : smallestGap)
-        } else if (steer > 0) {
-            intervalID.current = setInterval(() => {
-                holdKey("ArrowRight")
-                setTimeout(() => {
-                    releaseKey("ArrowLeft")
-                    releaseKey("ArrowRight")
-                }, smallestGap + 2)
-            }, delay > smallestGap ? delay : smallestGap)
+    if (steer === 0) return
+    else if (steer < 0) {
+      intervalID.current = setInterval(() => {
+        holdKey("ArrowLeft")
+        setTimeout(() => {
+          releaseKey("ArrowLeft")
+          releaseKey("ArrowRight")
+        }, smallestGap + 2)
+      }, delay > smallestGap ? delay : smallestGap)
+    } else if (steer > 0) {
+      intervalID.current = setInterval(() => {
+        holdKey("ArrowRight")
+        setTimeout(() => {
+          releaseKey("ArrowLeft")
+          releaseKey("ArrowRight")
+        }, smallestGap + 2)
+      }, delay > smallestGap ? delay : smallestGap)
+    }
+
+    return () => clearInterval(intervalID.current)
+  }, [steer])
+
+  function holdKey(key) {
+    document.dispatchEvent(new KeyboardEvent('keydown', { key }))
+  }
+  function releaseKey(key) {
+    document.dispatchEvent(new KeyboardEvent('keyup', { key }))
+  }
+
+  return (
+    <div className="relative min-h-screen w-full pt-[60px] flex flex-col">
+      {/* Spline 3D Scene - lazy loaded */}
+      <Suspense
+        fallback={
+          <div className="flex-1 flex items-center justify-center">
+            <p className="text-white/50 text-sm">Loading 3D scene...</p>
+          </div>
         }
+      >
+        <Spline
+          scene="https://prod.spline.design/A1i-MMZ2Ie1NTvif/scene.splinecode"
+          className="absolute inset-0 w-full h-full z-0"
+        />
+      </Suspense>
 
-    }, [steer])
-
-
-
-    function holdKey(key) {
-        const event = new KeyboardEvent('keydown', { key })
-        document.dispatchEvent(event)
-    }
-    function releaseKey(key) {
-        const event = new KeyboardEvent('keyup', { key })
-        document.dispatchEvent(event)
-    }
-
-
-
-
-    return (
-        <div className="relative h-full w-screen pt-[50px] lg:pt-[60px] flex-col items-center ">
-            <div className="absolute bottom-0 w-screen flex flex-col-reverse lg:flex-row  justify-between">
-            <div className="flex flex-row justify-start translate-x-[-20px]">
-                    <Pedals h={125} brakeFx={() => {
-                        releaseKey("ArrowUp")
-                    }} accelFx={() => {
-                        holdKey("ArrowUp")
-                    }} />
-                </div>
-                    <div onClick={() => setSteer(0)} className="absolute bottom-0 right-0 bg-gray-400 m-2 rounded-xl flex flex-row justify-between">
-                        <button
-                            onTouchStart={() => holdKey("ArrowLeft")}
-                            onTouchEnd={() => releaseKey("ArrowLeft")}
-                            onMouseDown={() => holdKey("ArrowLeft")}
-                            onMouseUp={() => releaseKey("ArrowLeft")}
-                            style={{ backgroundColor: "black" }}
-                            className="default-btn">
-                            <ArrowSVG w={50} h={50} deg={180} />
-                        </button>
-                        <button
-                            onTouchStart={() => holdKey(" ")}
-                            onTouchEnd={() => releaseKey(" ")}
-                            onMouseDown={() => holdKey(" ")}
-                            onMouseUp={() => releaseKey(" ")}
-                            style={{ backgroundColor: "black" }}
-                            className="default-btn">
-                            <ArrowSVG w={50} h={50} deg={270} />
-                        </button>
-                        <button
-                            onTouchStart={() => holdKey("ArrowRight")}
-                            onTouchEnd={() => releaseKey("ArrowRight")}
-                            onMouseDown={() => holdKey("ArrowRight")}
-                            onMouseUp={() => releaseKey("ArrowRight")}
-                            style={{ backgroundColor: "black" }}
-                            className="default-btn">
-                            <ArrowSVG w={50} h={50} deg={0} />
-                        </button>
-                    </div>
-               
-                
-            </div>
+      {/* Controls */}
+      <div className="absolute bottom-0 w-full flex flex-col-reverse lg:flex-row justify-between z-10">
+        <div className="flex flex-row justify-start -translate-x-5">
+          <Pedals
+            h={125}
+            brakeFx={() => releaseKey("ArrowUp")}
+            accelFx={() => holdKey("ArrowUp")}
+          />
         </div>
-    )
+        <div
+          onClick={() => setSteer(0)}
+          className="absolute bottom-0 right-0 bg-black/60 backdrop-blur-sm m-2 rounded-xl flex flex-row border border-white/10"
+        >
+          <button
+            onTouchStart={() => holdKey("ArrowLeft")}
+            onTouchEnd={() => releaseKey("ArrowLeft")}
+            onMouseDown={() => holdKey("ArrowLeft")}
+            onMouseUp={() => releaseKey("ArrowLeft")}
+            className="default-btn !bg-black/80"
+          >
+            <ArrowSVG w={50} h={50} deg={180} />
+          </button>
+          <button
+            onTouchStart={() => holdKey(" ")}
+            onTouchEnd={() => releaseKey(" ")}
+            onMouseDown={() => holdKey(" ")}
+            onMouseUp={() => releaseKey(" ")}
+            className="default-btn !bg-black/80"
+          >
+            <ArrowSVG w={50} h={50} deg={270} />
+          </button>
+          <button
+            onTouchStart={() => holdKey("ArrowRight")}
+            onTouchEnd={() => releaseKey("ArrowRight")}
+            onMouseDown={() => holdKey("ArrowRight")}
+            onMouseUp={() => releaseKey("ArrowRight")}
+            className="default-btn !bg-black/80"
+          >
+            <ArrowSVG w={50} h={50} deg={0} />
+          </button>
+        </div>
+      </div>
+    </div>
+  )
 }
-
-

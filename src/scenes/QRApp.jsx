@@ -1,106 +1,110 @@
 import { useEffect, useState } from "react"
 import QRCode from "react-qr-code"
 import html2canvas from "html2canvas"
-import DownloadSVG from "../assets/DownloadSVG"
-import { setSelectionRange } from "@testing-library/user-event/dist/utils"
-import SpinnerSVG from "../assets/SpinnerSVG"
+import DownloadSVG from "../components/componentassets/DownloadSVG"
+import SpinnerSVG from "../components/componentassets/SpinnerSVG"
 
+export default function QRApp({ embedded = false }) {
+  const [text, setText] = useState("")
+  const [qr, setQr] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
 
-export default function QRApp() {
-    const [text, setText] = useState("")
-    const [qr, setQr] = useState("")
-    const [isLoading, setIsLoading] = useState(false)
-    useEffect(() => {
-        if (qr) {
-            setIsLoading(true)
-            setTimeout(() => {
-                setIsLoading(false)
-            }, 2000)
-        }
-    }, [qr])
-
-    const snapShotQR = async () => {
-        const div = document.getElementById('qrdiv')
-        const canvas = await html2canvas(div)
-        const imgData = canvas.toDataURL('image/png')
-
-        const link = document.createElement('a')
-        link.href = imgData
-        link.download = 'myQRcode.png'
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
+  useEffect(() => {
+    if (qr) {
+      setIsLoading(true)
+      setTimeout(() => setIsLoading(false), 2000)
     }
+  }, [qr])
 
-    return (
-        <div className="h-full w-screen pt-[50px] lg:pt-[60px] flex flex-row justify-center items-start  overflow-scroll ">
-            <div className="w-full flex justify-center py-8 ">
-                <div className="max-w-sm w-full h-min bg-white flex flex-col justify-between rounded-2xl p-8 border-2">
-                    <div className="w-full flex flex-col justify-center p-4 ">
-                        {
-                            qr
-                                ? isLoading
-                                    ? <SpinnerSVG w={"100%"} h={50} color={"black"} />
-                                    : <>
-                                        <div id="qrdiv" className="bg-transparent border-2 lg:border-4 p-4 lg:p-4 border-black rounded-xl">
-                                            <div style={{
-                                                height: "auto",
-                                                maxWidth: 400,
-                                                width: "100%",
-                                            }} >
-                                                <QRCode size={256} value={qr}
-                                                    style={{
-                                                        height: "auto",
-                                                        maxWidth: "100%",
-                                                        width: "100%",
-                                                    }} viewBox={`0 0 256 256`} />
-                                            </div>
-                                        </div>
-                                        <button onClick={snapShotQR}
-                                            style={{
-                                                backgroundColor: "#55cc55"
-                                            }} className="default-btn w-min flex flex-row items-center justify-between">
-                                            <DownloadSVG w={30} h={30} color={"black"} />
-                                            <p className="whitespace-nowrap pl-2 color-white text-md">
-                                                QR
-                                            </p>
-                                        </button>
-                                    </>
-                                : <p className="color-black text-center">
-                                    Start typing to generate your QR code!
-                                </p>
-                        }
-                    </div>
+  const snapShotQR = async () => {
+    const div = document.getElementById('qrdiv')
+    const canvas = await html2canvas(div)
+    const imgData = canvas.toDataURL('image/png')
+    const link = document.createElement('a')
+    link.href = imgData
+    link.download = 'myQRcode.png'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
 
-                    <div className="flex flex-col">
-                        <input type="text" id="qrtext"
-                            onChange={(e) => { setText(e.target.value) }}
-                            placeholder="Enter url, text, etc..."
-                            className="border-2 border-black rounded-lg p-2" />
-                        <button onClick={(e) => {
-                            setQr(text)
-                        }} disabled={!text} style={{
-                            backgroundColor: text == qr
-                                ? "#ccc"
-                                : text
-                                    ? "#55cc55"
-                                    : "gray",
-                            opacity: text ? 1 : 0.2
-                        }} className="default-btn bg-black ">
-                            {
-                                isLoading
-                                    ? "..."
-                                    : text == qr && text
-                                        ? "Ready!"
-                                        : "Generate"
-                            }
-
-                        </button>
-                    </div>
-                </div>
-            </div>
+  const content = (
+    <div className={`w-full max-w-sm ${embedded ? '' : 'fade-in-up'}`}>
+      {!embedded && (
+        <div className="text-center mb-10">
+          <p className="text-sm uppercase tracking-[0.3em] text-white/40 mb-4 font-medium">
+            Tool
+          </p>
+          <h1 className="text-3xl font-bold text-white mb-2 gradient-text">
+            QR Code Generator
+          </h1>
         </div>
-    )
+      )}
+
+      <div className={embedded ? '' : 'glass-card p-6 md:p-8'}>
+          <div className="w-full flex flex-col justify-center mb-6">
+            {qr ? (
+              isLoading ? (
+                <div className="flex justify-center py-8">
+                  <SpinnerSVG w={40} h={40} color="white" />
+                </div>
+              ) : (
+                <>
+                  <div id="qrdiv" className="bg-white p-4 rounded-xl">
+                    <QRCode
+                      size={256}
+                      value={qr}
+                      style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                      viewBox="0 0 256 256"
+                    />
+                  </div>
+                  <button
+                    onClick={snapShotQR}
+                    className="cta-button mt-4 flex items-center justify-center gap-2 !bg-green-600 hover:!shadow-green-600/40"
+                  >
+                    <DownloadSVG w={20} h={20} color="white" />
+                    Download QR
+                  </button>
+                </>
+              )
+            ) : (
+              <p className="text-white/50 text-center py-8">
+                Start typing to generate your QR code!
+              </p>
+            )}
+          </div>
+
+          <div className="space-y-3">
+            <input
+              type="text"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              placeholder="Enter url, text, etc..."
+              className="w-full py-3 px-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all"
+            />
+            <button
+              onClick={() => setQr(text)}
+              disabled={!text}
+              className={`cta-button w-full ${
+                !text
+                  ? '!bg-gray-700 opacity-50 cursor-not-allowed'
+                  : text === qr
+                  ? '!bg-gray-500'
+                  : ''
+              }`}
+            >
+              {isLoading ? '...' : text === qr && text ? 'Ready!' : 'Generate'}
+            </button>
+          </div>
+        </div>
+      </div>
+  )
+
+  if (embedded) return content
+
+  return (
+    <div className="min-h-screen w-full pt-[80px] pb-20 px-4 sm:px-6 flex justify-center items-start">
+      {content}
+    </div>
+  )
 }
-
-

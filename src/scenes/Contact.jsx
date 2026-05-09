@@ -1,169 +1,153 @@
-import SpinnerSVG from "../assets/SpinnerSVG"
+import SpinnerSVG from "../components/componentassets/SpinnerSVG"
 import { useState } from "react"
 import { server } from "../server"
-import secrets from '../secrets.json'  
+import secrets from '../secrets.json'
 
 export default function Contact() {
-    const [servRes, setServRes] = useState("")
-    const [error, setError] = useState("")
-    const [isSent, setIsSent] = useState(false)
+  const [servRes, setServRes] = useState("")
+  const [error, setError] = useState("")
+  const [isSent, setIsSent] = useState(false)
+  const [form, setForm] = useState({ name: '', email: '', phone: '', comment: '' })
 
-    const handleContact = (e) => {
-        e.preventDefault() 
-        let pkg = {}
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value })
+  }
 
-        try {
-            const name = document.getElementById("name").value
-            const email = document.getElementById("email").value
-            const phone = document.getElementById("phone").value
-            const comment = document.getElementById("comment").value
+  const handleContact = (e) => {
+    e.preventDefault()
 
-            let notify = ""
-            if (!email) notify += " email"
-            if (!name) notify += " name"
-            if (!phone) notify += " phone"
-            if (!comment) notify += " comment"
-            if (notify) {
-                setError("missing:" + notify)
-                return
-            } else {
-                setError("")
-            }
-            pkg = {
-                name,
-                email,
-                phone,
-                comment,
-                key: secrets?.key
-            }
-        } catch (err) {
-            console.log("Error occured finding name, email, or comment", err)
-            return
-        }
-
-        if (isSent) return
-        setIsSent(true)
-
-        document.getElementById("name").style.opacity = 0.5
-        document.getElementById("email").style.opacity = 0.5
-        document.getElementById("phone").style.opacity = 0.5
-        document.getElementById("comment").style.opacity = 0.5
-
-        console.log("SENDING: ",  pkg )
-        // return
-        fetch(`${server()}/devcon/contact/form`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(pkg)
-        }).then(incoming => {
-            if (incoming.status == 200) setServRes("Message sent succesfully!")
-            else {
-                setServRes("Error occurred!")
-                return
-            }
-            return incoming.json()
-        }).then(response => {
-            console.log("Server responded: ", response)
-            setIsSent(false)
-        }).catch(console.error)
+    let notify = ""
+    if (!form.name) notify += " name"
+    if (!form.email) notify += " email"
+    if (!form.phone) notify += " phone"
+    if (!form.comment) notify += " comment"
+    if (notify) {
+      setError("Missing:" + notify)
+      return
     }
+    setError("")
 
-    return (
-        <div className="flex-col w-screen h-full pt-[50px] lg:pt-[60px] overflow-scroll">
-            <div className="w-full flex flex-row py-10 justify-center">
-                <form className="z-[100000] h-min max-w-2xl px-5 py-10 bg-[#ffffffdd] rounded-3xl ">
-                    {
-                        error
-                            ? <div className="mb-6 text-sm font-light text-center text-red-500">
-                                {error}
-                            </div>
-                            : <div className="mb-6 flex flex-col items-center">
+    if (isSent) return
+    setIsSent(true)
 
-                                <p className="mt-2 text-lg font-light text-center text-gray-800 ">
-                                    Text/Call: <a className="cursor-pointer">
-                                        (954) 902-0115
-                                    </a>
-                                </p>
-                                <a href="tel:+19549020115" className="default-btn mt-2 w-min whitespace-nowrap">Call Now!</a>
-                                {
-                                    !servRes
-                                        ? <h1 className=" text-xl font-light text-center text-gray-800 ">
-                                            Or leave us a message!
-                                        </h1>
-                                        : null
-                                }
+    const pkg = { ...form, key: secrets?.key }
 
-                            </div>
-                    }
-                    <div className="grid max-w-xl grid-cols-2 gap-4 m-auto">
-                        {!servRes
-                            ? <>
-                                <div className="col-span-2 lg:col-span-1">
-                                    <div className=" relative ">
-                                        <input type="text" id="name" className=" shadow-xl rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                            placeholder="Name" />
-                                    </div>
-                                </div>
-                                <div className="col-span-2 lg:col-span-1">
-                                    <div className=" relative ">
-                                        <input type="text" id="phone" className=" shadow-xl rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                            placeholder="Phone" />
-                                    </div>
-                                </div>
-                                <div className="col-span-2 lg:col-span-2">
-                                    <div className=" relative ">
-                                        <input type="text" id="email" className=" shadow-xl rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                            placeholder="Email" />
-                                    </div>
-                                </div>
-                                <div className="col-span-2">
-                                    <input id="comment" className=" shadow-xl flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                        placeholder="Message Here" name="comment" >
-                                    </input>
+    fetch(`${server()}/devcon/contact/form`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(pkg),
+    })
+      .then((incoming) => {
+        if (incoming.status === 200) setServRes("Message sent successfully!")
+        else {
+          setServRes("Error occurred!")
+          return
+        }
+        return incoming.json()
+      })
+      .then((response) => {
+        console.log("Server responded: ", response)
+        setIsSent(false)
+      })
+      .catch(console.error)
+  }
 
-                                </div>
-                            </>
-                            : <>
-                                <p className="col-span-2 text-xl font-bold text-green-500">{servRes}</p>
-                                <p className="col-span-2 text-center text-md">We'll get back to you shortly!</p>
-                                <br />
-                                <br />
-                                <p className="col-span-2 text-center text-md">or reach us directly at</p>
-                                <p className="col-span-2 text-center text-md font-bold">daniel@devcon1solutions.com</p>
-                            </>
-                        }
-                        <div className="col-span-2 text-right">
-                            {
-                                !servRes && !isSent
-                                    ? <button onClick={(e) => {
-                                        try {
-
-                                            handleContact(e)
-                                        } catch (err) {
-                                            console.error("Submissiong ERROR:", err)
-                                        }
-                                    }} className="active:shadow-xl py-2 px-4 shadow-xl bg-red-600 active:bg-indigo-700 active:ring-indigo-500 active:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md active:outline-none active:ring-2 active:ring-offset-2  rounded-lg ">
-                                        Send
-                                    </button>
-
-                                    : !servRes
-                                        ? <div className="w-full flex justify-center">
-                                            <SpinnerSVG w={50} h={50} color={"black"} />
-                                        </div>
-                                        : null
-                            }
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-
-
+  return (
+    <div className="min-h-screen w-full pt-[80px] pb-20 px-4 sm:px-6 flex items-start justify-center">
+      <div className="w-full max-w-lg fade-in-up">
+        {/* Header */}
+        <div className="text-center mb-10">
+          <p className="text-sm uppercase tracking-[0.3em] text-white/40 mb-4 font-medium">
+            Reach Out
+          </p>
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 gradient-text">
+            Get In Touch
+          </h1>
         </div>
 
-    )
+        <form onSubmit={handleContact} className="glass-card p-6 md:p-10">
+          {error && (
+            <div className="mb-6 text-sm text-center text-red-400 bg-red-500/10 border border-red-500/20 p-3 rounded-xl">
+              {error}
+            </div>
+          )}
+
+          {/* <div className="mb-8 flex flex-col items-center">
+            <p className="text-white/60 text-center">
+              Text/Call:{" "}
+              <a href="tel:+19549020115" className="text-white/90 hover:text-white transition-colors font-medium">
+                (954) 902-0115
+              </a>
+            </p>
+            <a
+              href="tel:+19549020115"
+              className="cta-button mt-4 text-sm !py-2.5 !px-6"
+            >
+              Call Now!
+            </a>
+            {!servRes && (
+              <p className="text-white/40 mt-6 text-sm">Or leave us a message</p>
+            )}
+          </div> */}
+
+          {!servRes ? (
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input
+                  type="text"
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  placeholder="Name"
+                  className="w-full py-3 px-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all"
+                />
+                <input
+                  type="text"
+                  name="phone"
+                  value={form.phone}
+                  onChange={handleChange}
+                  placeholder="Phone"
+                  className="w-full py-3 px-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all"
+                />
+              </div>
+              <input
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                placeholder="Email"
+                className="w-full py-3 px-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all"
+              />
+              <textarea
+                name="comment"
+                value={form.comment}
+                onChange={handleChange}
+                placeholder="Your message..."
+                rows={4}
+                className="w-full py-3 px-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all resize-none"
+              />
+              {!isSent ? (
+                <button type="submit" className="cta-button w-full">
+                  Send Message
+                </button>
+              ) : (
+                <div className="w-full flex justify-center py-4">
+                  <SpinnerSVG w={40} h={40} color="white" />
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="text-center space-y-3 py-4">
+              <p className="text-2xl font-bold text-green-400">{servRes}</p>
+              <p className="text-white/60">We'll get back to you shortly!</p>
+              <div className="pt-4">
+                <p className="text-white/40 text-sm">or reach us directly at</p>
+                <p className="text-white font-medium mt-1">daniel@devcon1solutions.com</p>
+              </div>
+            </div>
+          )}
+        </form>
+      </div>
+    </div>
+  )
 }
-
-

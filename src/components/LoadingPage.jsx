@@ -1,17 +1,12 @@
-import SpinnerSVG from "../assets/SpinnerSVG";
-
-
-
-
-
-
-
+import SpinnerSVG from "./componentassets/SpinnerSVG"
 
 export default function LoadingPage() {
-
-    return (
-        <div className="absolute z-[10000000] w-screen h-full bg-black flex flex-row items-center justify-center">
-            <SpinnerSVG w={50} h={50} color={"white"} />
-        </div>
-    )
+  return (
+    <div className="flex-1 flex items-center justify-center min-h-[60vh]">
+      <div className="flex flex-col items-center gap-4">
+        <SpinnerSVG w={40} h={40} color="white" />
+        <p className="text-white/40 text-sm">Loading...</p>
+      </div>
+    </div>
+  )
 }
