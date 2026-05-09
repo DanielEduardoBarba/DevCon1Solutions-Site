@@ -1,7 +1,7 @@
 import config from "./config.json"
 
 export function isProd() {
-    return process.env.REACT_APP_ENV != "development"
+    return import.meta.env.VITE_ENV != "development"
 
 }
 
@@ -10,4 +10,4 @@ export function server() {
 }
 
 console.log("ENV:",isProd()?"PRODUCTION":"DEVELOPMENT")
-console.log("REACT_ENV: ", process.env.REACT_APP_ENV)
+console.log("REACT_ENV: ", import.meta.env.VITE_ENV)
