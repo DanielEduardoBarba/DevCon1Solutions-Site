@@ -42,7 +42,7 @@ export default function FaceChatSVG({ h, w, eyeSize = 7, eyeWidth = 5, color = "
         }
     }, [alive])
 
-    const moodColor = mood === "happy" ? "#4ade80" : mood === "thinking" ? "#facc15" : mood === "sad" ? "#f87171" : color
+    const moodColor = mood === "happy" ? "#4ade80" : mood === "thinking" ? "#facc15" : mood === "sad" ? "#f87171" : mood === "excited" ? "#818cf8" : color
     const pupilSize = eyeSize * 0.45
 
     return (

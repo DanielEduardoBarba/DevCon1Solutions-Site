@@ -20,13 +20,16 @@ export default function Home() {
 
       {/* Hero Content */}
       <div className="relative z-10 flex flex-col items-center px-6 max-w-4xl mx-auto text-center">
-        <div className="w-56 md:w-72 lg:w-80 mb-8 fade-in-up rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-indigo-500/20">
+        {/* Logo image — adjust inset values to control how much each edge hides */}
+        {/* <div style={{
+            clipPath: "inset(4% 8% 12% 8% round 1.5rem)",
+          }} className="w-56 md:w-72 lg:w-80 my-8 fade-in-up rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-indigo-500/20">
           <img
             src={devCon1Full}
             alt="DevCon1 Solutions - Software, IT, and Custom Solutions"
-            className="w-[140%] max-w-none h-auto object-cover -ml-[20%]"
+            className="w-full h-auto object-cover"
           />
-        </div>
+        </div> */}
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 fade-in-up fade-in-up-delay-1 gradient-text leading-[1.1] tracking-tight">
           Software, IT, and
           <br />
@@ -52,11 +55,11 @@ export default function Home() {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 fade-in-up fade-in-up-delay-4">
+      {/* <div className="absolute bottom-8 left-1/2 -translate-x-1/2 fade-in-up fade-in-up-delay-4">
         <div className="w-6 h-10 rounded-full border-2 border-white/20 flex justify-center pt-2">
           <div className="w-1 h-3 bg-white/40 rounded-full animate-bounce" />
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

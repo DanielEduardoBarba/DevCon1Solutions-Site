@@ -12,6 +12,7 @@ const defaultUser = {}
 
 export default function App() {
   const [user, setUser] = useState(defaultUser)
+  const [appFullscreen, setAppFullscreen] = useState(false)
   const location = useLocation()
   const lsAppName = "devConUser"
 
@@ -57,6 +58,7 @@ export default function App() {
       user, saveUser,
       menuOptions,
       delay,
+      appFullscreen, setAppFullscreen,
     }}>
       <div className="app-wrapper">
         <div className="animated-bg" aria-hidden="true">
@@ -66,7 +68,7 @@ export default function App() {
           <div className="bg-orb bg-orb-4" />
         </div>
         <Header />
-        <main className="page-content" key={location.pathname}>
+        <main className="page-content" key={location.pathname} style={appFullscreen ? { overflow: 'hidden' } : {}}>
           <Outlet />
         </main>
         <Chat />

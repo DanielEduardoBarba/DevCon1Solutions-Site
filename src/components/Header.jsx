@@ -6,7 +6,7 @@ import AppContext from "../AppContext"
 export default function Header() {
   const [showMenu, setShowMenu] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const { menuOptions } = useContext(AppContext)
+  const { menuOptions, appFullscreen } = useContext(AppContext)
   const ref = useRef(null)
   const location = useLocation()
 
@@ -30,6 +30,9 @@ export default function Header() {
       window.removeEventListener('scroll', handleScroll)
     }
   }, [])
+
+  // Hide entirely when an app is fullscreen (after all hooks)
+  if (appFullscreen) return null
 
   return (
     <header
@@ -70,16 +73,16 @@ export default function Header() {
         <div className="lg:hidden" ref={ref}>
           <button
             onClick={() => setShowMenu(!showMenu)}
-            className="flex flex-col gap-1.5 p-3 rounded-lg hover:bg-white/10 transition-colors"
+            className="flex flex-col items-center justify-center gap-1.5 p-3 rounded-lg hover:bg-white/10 transition-colors w-11 h-11"
             aria-label="Toggle menu"
           >
-            <span className={`w-5 h-0.5 bg-white rounded transition-all duration-300 origin-center ${showMenu ? 'rotate-45 translate-y-[4px]' : ''}`} />
+            <span className={`w-5 h-0.5 bg-white rounded transition-all duration-300 origin-center ${showMenu ? 'rotate-45 translate-y-[8px]' : ''}`} />
             <span className={`w-5 h-0.5 bg-white rounded transition-all duration-300 ${showMenu ? 'opacity-0 scale-0' : ''}`} />
-            <span className={`w-5 h-0.5 bg-white rounded transition-all duration-300 origin-center ${showMenu ? '-rotate-45 -translate-y-[4px]' : ''}`} />
+            <span className={`w-5 h-0.5 bg-white rounded transition-all duration-300 origin-center ${showMenu ? '-rotate-45 -translate-y-[8px]' : ''}`} />
           </button>
 
           {showMenu && (
-            <div className="absolute top-[60px] right-4 w-56 glass-card py-2 menu-enter">
+            <div className="absolute top-[60px] right-4 w-56 py-2 menu-enter rounded-2xl border border-white/10" style={{ background: 'rgba(10,10,26,0.85)', backdropFilter: 'blur(40px) saturate(1.5)', WebkitBackdropFilter: 'blur(40px) saturate(1.5)' }}>
               {menuOptions.map((opt, i) => (
                 <NavLink
                   key={i}

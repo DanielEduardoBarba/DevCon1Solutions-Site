@@ -1,15 +1,38 @@
-import { useState, Suspense, lazy } from "react"
+import { useState, useEffect, Suspense, lazy, useContext } from "react"
 import QRApp from "./QRApp"
 import TicTacToe from "./TicTacToe"
 import Calculator from "./Calculator"
 import Connect4 from "./Connect4"
 import SpinnerSVG from "../components/componentassets/SpinnerSVG"
+import AppContext from "../AppContext"
 
 const EmulatedControls = lazy(() => import("./EmulatedControls"))
 
 export default function Apps() {
+  const { setAppFullscreen } = useContext(AppContext)
   const [activeApp, setActiveApp] = useState(null)
   const [isFullscreen, setIsFullscreen] = useState(false)
+  // Delayed flag for CSS transition (mount → animate in)
+  const [fsAnimated, setFsAnimated] = useState(false)
+
+  // Sync fullscreen state up to context so Header can hide
+  useEffect(() => {
+    setAppFullscreen(isFullscreen)
+    return () => setAppFullscreen(false)
+  }, [isFullscreen])
+
+  // CSS transition: mount at un-animated position, then animate in
+  useEffect(() => {
+    if (isFullscreen) {
+      setFsAnimated(false)
+      const raf = requestAnimationFrame(() => {
+        requestAnimationFrame(() => setFsAnimated(true))
+      })
+      return () => cancelAnimationFrame(raf)
+    } else {
+      setFsAnimated(false)
+    }
+  }, [isFullscreen])
 
   const apps = [
     {
@@ -127,10 +150,10 @@ export default function Apps() {
   const activeTitle = apps.find(a => a.id === activeApp)?.title || ""
 
   return (
-    <div className={`w-full ${isFullscreen ? 'fixed inset-0 z-[9999] bg-black/95' : 'min-h-screen pt-[80px] pb-20 px-4 sm:px-6'}`}>
-      <div className={`mx-auto ${isFullscreen ? 'w-full h-full flex flex-col' : 'max-w-6xl'}`}>
-        {/* Header - only when not fullscreen and no active app */}
-        {!activeApp && !isFullscreen && (
+    <div className="w-full min-h-screen pt-[80px] pb-20 px-4 sm:px-6">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        {!activeApp && (
           <div className="text-center mb-12">
             <p className="text-sm uppercase tracking-[0.3em] text-white/40 mb-4 fade-in-up font-medium">Showcase</p>
             <h1 className="text-3xl md:text-5xl font-bold mb-4 fade-in-up fade-in-up-delay-1 gradient-text">Our Apps</h1>
@@ -174,7 +197,7 @@ export default function Apps() {
 
         {/* Active App Window */}
         {activeApp && (
-          <div className={`fade-in-up ${isFullscreen ? 'flex flex-col h-full' : ''}`}>
+          <div className="fade-in-up">
             {/* Back */}
             {!isFullscreen && (
               <button
@@ -187,40 +210,121 @@ export default function Apps() {
                 Back to Apps
               </button>
             )}
-
-            {/* Window Chrome */}
-            <div className={`glass-card !rounded-2xl overflow-hidden border border-white/10 ${isFullscreen ? 'flex-1 flex flex-col !rounded-none' : ''}`}>
-              {/* Title Bar */}
-              <div className="flex items-center gap-3 px-4 py-2.5 border-b border-white/5 bg-white/[0.03] shrink-0">
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => { setActiveApp(null); setIsFullscreen(false) }}
-                    className="w-3.5 h-3.5 rounded-full bg-[#ff5f57] hover:brightness-110 transition-all cursor-pointer shadow-[0_0_6px_rgba(255,95,87,0.4)] active:scale-90"
-                    title="Close"
-                  />
-                  <button
-                    onClick={() => setIsFullscreen(false)}
-                    className="w-3.5 h-3.5 rounded-full bg-[#febc2e] hover:brightness-110 transition-all cursor-pointer shadow-[0_0_6px_rgba(254,188,46,0.4)] active:scale-90"
-                    title="Minimize"
-                  />
-                  <button
-                    onClick={() => setIsFullscreen(f => !f)}
-                    className="w-3.5 h-3.5 rounded-full bg-[#28c840] hover:brightness-110 transition-all cursor-pointer shadow-[0_0_6px_rgba(40,200,64,0.4)] active:scale-90"
-                    title="Fullscreen"
-                  />
-                </div>
-                <p className="text-white/40 text-xs font-medium flex-1 text-center select-none">{activeTitle}</p>
-                <div className="w-[62px]" /> {/* Spacer to center title */}
-              </div>
-
-              {/* App Content */}
-              <div className={`relative ${isFullscreen ? 'flex-1 overflow-auto' : ''}`}>
-                {renderAppContent()}
-              </div>
-            </div>
           </div>
         )}
       </div>
+
+      {/* Fullscreen overlay backdrop — animated */}
+      {isFullscreen && (
+        <div
+          className="fixed inset-0 z-[9998] transition-opacity duration-500 ease-out"
+          style={{
+            opacity: fsAnimated ? 1 : 0,
+            background: "linear-gradient(135deg, rgba(10,10,26,0.97) 0%, rgba(13,13,31,0.98) 50%, rgba(10,15,26,0.97) 100%)",
+            backdropFilter: "blur(40px)",
+            WebkitBackdropFilter: "blur(40px)",
+          }}
+        />
+      )}
+
+      {/* App Window — always in flow when normal, fixed overlay when fullscreen */}
+      {activeApp && (
+        <div
+          className="transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+          style={isFullscreen ? {
+            position: "fixed",
+            top: fsAnimated ? 0 : 80,
+            left: fsAnimated ? 0 : 24,
+            right: fsAnimated ? 0 : 24,
+            bottom: fsAnimated ? 0 : 24,
+            zIndex: 9999,
+            opacity: fsAnimated ? 1 : 0.9,
+            transform: fsAnimated ? "scale(1)" : "scale(0.97)",
+          } : {
+            position: "relative",
+            maxWidth: "72rem",
+            margin: activeApp ? "-0.5rem auto 0" : "0 auto",
+            padding: "0 1rem",
+          }}
+        >
+          <div
+            className="overflow-hidden border border-white/10 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] flex flex-col"
+            style={{
+              borderRadius: isFullscreen && fsAnimated ? 0 : 16,
+              background: "rgba(255,255,255,0.03)",
+              backdropFilter: "blur(20px)",
+              WebkitBackdropFilter: "blur(20px)",
+              boxShadow: isFullscreen
+                ? "none"
+                : "0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05)",
+              height: isFullscreen ? "100%" : "auto",
+              maxHeight: isFullscreen ? "100%" : "calc(100vh - 100px)",
+              overflowY: isFullscreen ? "hidden" : "auto",
+            }}
+          >
+            {/* Title Bar — macOS style */}
+            <div
+              className="flex items-center gap-3 px-4 shrink-0 border-b transition-all duration-300"
+              style={{
+                paddingTop: 10,
+                paddingBottom: 10,
+                borderColor: "rgba(255,255,255,0.06)",
+                background: isFullscreen
+                  ? "rgba(255,255,255,0.02)"
+                  : "linear-gradient(to bottom, rgba(255,255,255,0.05), rgba(255,255,255,0.02))",
+              }}
+            >
+              <div className="flex gap-[7px] group/dots">
+                {/* Close */}
+                <button
+                  onClick={() => { setActiveApp(null); setIsFullscreen(false) }}
+                  className="w-[13px] h-[13px] rounded-full transition-all duration-200 cursor-pointer group-hover/dots:shadow-[0_0_8px_rgba(255,95,87,0.5)] active:scale-75"
+                  style={{ background: "linear-gradient(135deg, #ff6058, #e0443e)" }}
+                  title="Close"
+                >
+                  <span className="opacity-0 group-hover/dots:opacity-100 text-[8px] font-bold text-black/60 flex items-center justify-center leading-none">✕</span>
+                </button>
+                {/* Minimize */}
+                <button
+                  onClick={() => setIsFullscreen(false)}
+                  className="w-[13px] h-[13px] rounded-full transition-all duration-200 cursor-pointer group-hover/dots:shadow-[0_0_8px_rgba(254,188,46,0.5)] active:scale-75"
+                  style={{ background: "linear-gradient(135deg, #ffc130, #e0a520)" }}
+                  title="Minimize"
+                >
+                  <span className="opacity-0 group-hover/dots:opacity-100 text-[8px] font-bold text-black/60 flex items-center justify-center leading-none">−</span>
+                </button>
+                {/* Fullscreen */}
+                <button
+                  onClick={() => setIsFullscreen(f => !f)}
+                  className="w-[13px] h-[13px] rounded-full transition-all duration-200 cursor-pointer group-hover/dots:shadow-[0_0_8px_rgba(40,200,64,0.5)] active:scale-75"
+                  style={{ background: "linear-gradient(135deg, #2dd840, #1aab29)" }}
+                  title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
+                >
+                  <span className="opacity-0 group-hover/dots:opacity-100 text-[8px] font-bold text-black/60 flex items-center justify-center leading-none">
+                    {isFullscreen ? "↙" : "↗"}
+                  </span>
+                </button>
+              </div>
+              <p className="text-white/35 text-[11px] font-medium flex-1 text-center select-none tracking-wide">{activeTitle}</p>
+              <div className="w-[55px]" />
+            </div>
+
+            {/* App Content */}
+            <div className={`relative ${isFullscreen ? 'flex-1 overflow-auto' : ''}`}>
+              {renderAppContent()}
+            </div>
+          </div>
+
+          {/* Fullscreen back button — hidden; use red dot to close */}
+        </div>
+      )}
+
+      <style>{`
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+      `}</style>
     </div>
   )
 }

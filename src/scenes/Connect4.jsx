@@ -154,6 +154,8 @@ export default function Connect4() {
 
   useEffect(() => {
     if (!isPlayerTurn && !gameResult) {
+      // Fred "thinks" first, then makes his move
+      fireFred("thinking", "thinking")
       const timer = setTimeout(() => {
         const col = fredMove(board)
         if (col === null || col === undefined) return
@@ -172,11 +174,11 @@ export default function Connect4() {
           setScore(s => ({ ...s, draws: s.draws + 1 }))
           fireFred("draw", "neutral")
         } else {
-          const r = ["taunt", "thinking", "idle"]
-          fireFred(r[Math.floor(Math.random() * r.length)], "thinking")
+          const r = ["taunt", "curious", "sassy", "idle"]
+          fireFred(r[Math.floor(Math.random() * r.length)], "neutral")
           setIsPlayerTurn(true)
         }
-      }, 500 + Math.random() * 500)
+      }, 2000 + Math.random() * 1000)
       return () => clearTimeout(timer)
     }
   }, [isPlayerTurn, board, gameResult])
@@ -198,7 +200,6 @@ export default function Connect4() {
       setScore(s => ({ ...s, draws: s.draws + 1 }))
       fireFred("draw", "neutral")
     } else {
-      fireFred(Math.random() > 0.5 ? "impressed" : "thinking", "thinking")
       setIsPlayerTurn(false)
     }
   }

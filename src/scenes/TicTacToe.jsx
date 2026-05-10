@@ -90,6 +90,8 @@ export default function TicTacToe() {
 
   useEffect(() => {
     if (!isPlayerTurn && !gameResult) {
+      // Fred "thinks" first, then makes his move
+      fireFred("thinking", "thinking")
       const timer = setTimeout(() => {
         const move = getBestMove([...board])
         if (move === -1 || move === undefined) return
@@ -100,11 +102,11 @@ export default function TicTacToe() {
         if (result) {
           handleGameEnd(result)
         } else {
-          const reactions = ["taunt", "thinking", "idle"]
-          fireFred(reactions[Math.floor(Math.random() * reactions.length)], "thinking")
+          const reactions = ["taunt", "curious", "sassy", "idle"]
+          fireFred(reactions[Math.floor(Math.random() * reactions.length)], "neutral")
           setIsPlayerTurn(true)
         }
-      }, 600 + Math.random() * 400)
+      }, 2000 + Math.random() * 1000)
       return () => clearTimeout(timer)
     }
   }, [isPlayerTurn, board, gameResult])
@@ -133,7 +135,6 @@ export default function TicTacToe() {
     if (result) {
       handleGameEnd(result)
     } else {
-      fireFred(Math.random() > 0.5 ? "thinking" : "impressed", "thinking")
       setIsPlayerTurn(false)
     }
   }
