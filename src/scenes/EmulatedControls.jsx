@@ -44,7 +44,7 @@ export default function EmulatedControls() {
   }
 
   return (
-    <div className="relative min-h-screen w-full pt-[60px] flex flex-col">
+    <div className="relative h-full w-full flex flex-col">
       {/* Spline 3D Scene - lazy loaded */}
       <Suspense
         fallback={
