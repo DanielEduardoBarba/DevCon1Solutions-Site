@@ -8,6 +8,7 @@
 package-lock.json
 fb.json
 secrets.json
+firebase-debug.log
 
 # testing
 /coverage
