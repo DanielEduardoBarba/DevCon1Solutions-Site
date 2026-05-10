@@ -44,7 +44,7 @@ export default function EmulatedControls() {
   }
 
   return (
-    <div className="relative h-full w-full flex flex-col">
+    <div className="relative h-full min-h-[400px] w-full flex flex-col">
       {/* Spline 3D Scene - lazy loaded */}
       <Suspense
         fallback={
@@ -70,35 +70,72 @@ export default function EmulatedControls() {
         </div>
         <div
           onClick={() => setSteer(0)}
-          className="absolute bottom-0 right-0 bg-black/60 backdrop-blur-sm m-2 rounded-xl flex flex-row border border-white/10"
+          className="absolute bottom-0 right-0 bg-black/60 backdrop-blur-sm m-2 rounded-xl border border-white/10"
         >
-          <button
-            onTouchStart={() => holdKey("ArrowLeft")}
-            onTouchEnd={() => releaseKey("ArrowLeft")}
-            onMouseDown={() => holdKey("ArrowLeft")}
-            onMouseUp={() => releaseKey("ArrowLeft")}
-            className="default-btn !bg-black/80"
-          >
-            <ArrowSVG w={50} h={50} deg={180} />
-          </button>
-          <button
-            onTouchStart={() => holdKey(" ")}
-            onTouchEnd={() => releaseKey(" ")}
-            onMouseDown={() => holdKey(" ")}
-            onMouseUp={() => releaseKey(" ")}
-            className="default-btn !bg-black/80"
-          >
-            <ArrowSVG w={50} h={50} deg={270} />
-          </button>
-          <button
-            onTouchStart={() => holdKey("ArrowRight")}
-            onTouchEnd={() => releaseKey("ArrowRight")}
-            onMouseDown={() => holdKey("ArrowRight")}
-            onMouseUp={() => releaseKey("ArrowRight")}
-            className="default-btn !bg-black/80"
-          >
-            <ArrowSVG w={50} h={50} deg={0} />
-          </button>
+          {/* Mobile: up above, left+right below */}
+          <div className="flex flex-col lg:hidden">
+            <div className="flex justify-center">
+              <button
+                onTouchStart={() => holdKey(" ")}
+                onTouchEnd={() => releaseKey(" ")}
+                onMouseDown={() => holdKey(" ")}
+                onMouseUp={() => releaseKey(" ")}
+                className="default-btn !bg-black/80"
+              >
+                <ArrowSVG w={50} h={50} deg={270} />
+              </button>
+            </div>
+            <div className="flex flex-row">
+              <button
+                onTouchStart={() => holdKey("ArrowLeft")}
+                onTouchEnd={() => releaseKey("ArrowLeft")}
+                onMouseDown={() => holdKey("ArrowLeft")}
+                onMouseUp={() => releaseKey("ArrowLeft")}
+                className="default-btn !bg-black/80"
+              >
+                <ArrowSVG w={50} h={50} deg={180} />
+              </button>
+              <button
+                onTouchStart={() => holdKey("ArrowRight")}
+                onTouchEnd={() => releaseKey("ArrowRight")}
+                onMouseDown={() => holdKey("ArrowRight")}
+                onMouseUp={() => releaseKey("ArrowRight")}
+                className="default-btn !bg-black/80"
+              >
+                <ArrowSVG w={50} h={50} deg={0} />
+              </button>
+            </div>
+          </div>
+          {/* Desktop: left, up, right in a row */}
+          <div className="hidden lg:flex flex-row">
+            <button
+              onTouchStart={() => holdKey("ArrowLeft")}
+              onTouchEnd={() => releaseKey("ArrowLeft")}
+              onMouseDown={() => holdKey("ArrowLeft")}
+              onMouseUp={() => releaseKey("ArrowLeft")}
+              className="default-btn !bg-black/80"
+            >
+              <ArrowSVG w={50} h={50} deg={180} />
+            </button>
+            <button
+              onTouchStart={() => holdKey(" ")}
+              onTouchEnd={() => releaseKey(" ")}
+              onMouseDown={() => holdKey(" ")}
+              onMouseUp={() => releaseKey(" ")}
+              className="default-btn !bg-black/80"
+            >
+              <ArrowSVG w={50} h={50} deg={270} />
+            </button>
+            <button
+              onTouchStart={() => holdKey("ArrowRight")}
+              onTouchEnd={() => releaseKey("ArrowRight")}
+              onMouseDown={() => holdKey("ArrowRight")}
+              onMouseUp={() => releaseKey("ArrowRight")}
+              className="default-btn !bg-black/80"
+            >
+              <ArrowSVG w={50} h={50} deg={0} />
+            </button>
+          </div>
         </div>
       </div>
     </div>

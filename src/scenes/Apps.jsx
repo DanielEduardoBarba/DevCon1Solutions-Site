@@ -257,8 +257,8 @@ export default function Apps() {
               boxShadow: isFullscreen
                 ? "none"
                 : "0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05)",
-              height: isFullscreen ? "100dvh" : "auto",
-              maxHeight: isFullscreen ? "100dvh" : "calc(100vh - 100px)",
+              height: isFullscreen ? "100dvh" : "calc(100dvh - 180px)",
+              maxHeight: isFullscreen ? "100dvh" : "calc(100dvh - 180px)",
               overflowY: isFullscreen ? "hidden" : "auto",
             }}
           >
@@ -310,7 +310,7 @@ export default function Apps() {
             </div>
 
             {/* App Content */}
-            <div className={`relative ${isFullscreen ? 'flex-1 overflow-hidden' : ''}`}>
+            <div className="relative flex-1 overflow-hidden">
               {renderAppContent()}
             </div>
           </div>
