@@ -3,9 +3,22 @@ import ComputerEmojiSVG from "../components/componentassets/ComputerEmojiSVG"
 import PhoneEmojiSVG from "../components/componentassets/PhoneEmojiSVG"
 import Confetti from "react-confetti"
 
+function useWindowSize() {
+  const [size, setSize] = useState({ width: window.innerWidth, height: window.innerHeight })
+  useEffect(() => {
+    const onResize = () => setSize({ width: window.innerWidth, height: window.innerHeight })
+    window.addEventListener("resize", onResize, { passive: true })
+    return () => window.removeEventListener("resize", onResize)
+  }, [])
+  return size
+}
+
 export default function Services() {
   const [celebrate, setCelebrate] = useState(false)
+  const [recycle, setRecycle] = useState(false)
   const dispatchID = useRef(null)
+  const confettiTimer = useRef(null)
+  const { width, height } = useWindowSize()
 
   const services = [
     "https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg",
@@ -60,7 +73,17 @@ export default function Services() {
 
   return (
     <div className="min-h-screen w-full pt-[80px] pb-20 px-4 sm:px-6">
-      {celebrate && <Confetti width={window.innerWidth} height={window.innerHeight} recycle={true} />}
+      {celebrate && (
+        <Confetti
+          width={width}
+          height={height}
+          recycle={recycle}
+          numberOfPieces={180}
+          gravity={0.18}
+          style={{ position: "fixed", top: 0, left: 0, zIndex: 99998, pointerEvents: "none" }}
+          onConfettiComplete={() => setCelebrate(false)}
+        />
+      )}
 
       <div className="max-w-5xl mx-auto">
         {/* Header */}
@@ -117,7 +140,18 @@ export default function Services() {
             <p className="text-white/70 text-base md:text-lg leading-relaxed mb-4">
               We take your project from start to finish... and that's something to
               <button
-                onClick={() => setCelebrate((c) => !c)}
+                onClick={() => {
+                  clearTimeout(confettiTimer.current)
+                  if (celebrate) {
+                    setCelebrate(false)
+                    setRecycle(false)
+                  } else {
+                    setRecycle(true)
+                    setCelebrate(true)
+                    // stop spawning new pieces after 3s, let existing ones fall off
+                    confettiTimer.current = setTimeout(() => setRecycle(false), 3000)
+                  }
+                }}
                 style={{
                   backgroundColor: celebrate ? '#33ff33' : '',
                   boxShadow: celebrate ? '0px 0px 52px 5px #33ff33' : '',
