@@ -39,11 +39,11 @@ export default function Header() {
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
       style={{
         background: scrolled
-          ? 'rgba(0, 0, 0, 0.7)'
-          : 'linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 100%)',
-        backdropFilter: scrolled ? 'blur(20px)' : 'blur(10px)',
-        WebkitBackdropFilter: scrolled ? 'blur(20px)' : 'blur(10px)',
-        borderBottom: scrolled ? '1px solid rgba(255,255,255,0.05)' : 'none',
+          ? 'rgba(10, 10, 26, 0.55)'
+          : 'linear-gradient(to bottom, rgba(10,10,26,0.4) 0%, transparent 100%)',
+        backdropFilter: 'blur(24px) saturate(1.4)',
+        WebkitBackdropFilter: 'blur(24px) saturate(1.4)',
+        borderBottom: scrolled ? '1px solid rgba(255,255,255,0.06)' : '1px solid transparent',
       }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-[60px]">
