@@ -144,10 +144,13 @@ export default function Privacy() {
             <h2 className="text-xl md:text-2xl font-semibold text-white mb-3">5. Third-Party Services</h2>
             <p className="text-white/70">
               The Services may rely on or link to third-party platforms (such as Google
-              Firebase, analytics providers, hosting providers, and external repositories or
-              profiles). Their collection and use of information is governed by their own
-              privacy policies, which we encourage you to review. DevCon1 is not responsible
-              for the practices of third parties.
+              Firebase, analytics providers, hosting providers, AI/LLM providers that
+              power our chat assistant, and external repositories or profiles). Their
+              collection and use of information is governed by their own privacy
+              policies, which we encourage you to review. Where reasonably available,
+              we configure these providers so that conversation content and other
+              customer data are not used to train their public models. DevCon1 is not
+              responsible for the practices of third parties.
             </p>
           </section>
 
@@ -194,12 +197,14 @@ export default function Privacy() {
           <section>
             <h2 className="text-xl md:text-2xl font-semibold text-white mb-3">9. U.S. State Privacy Rights</h2>
             <p className="text-white/70">
-              Residents of certain U.S. states (such as California, Colorado, Connecticut,
-              Utah, and Virginia) may have additional rights, including the right to know,
-              access, correct, delete, and opt out of certain processing of personal
-              information. <strong>DevCon1 does not sell personal information</strong> and does not
-              share personal information for cross-context behavioral advertising as those
-              terms are defined under applicable law.
+              Residents of certain U.S. states (including but not limited to
+              California, Colorado, Connecticut, Florida, Oregon, Texas, Utah, and
+              Virginia) may have additional rights under applicable state privacy
+              laws, including the right to know, access, correct, delete, and opt
+              out of certain processing of personal information.{" "}
+              <strong>DevCon1 does not sell personal information</strong> and does not
+              share personal information for cross-context behavioral advertising as
+              those terms are defined under applicable law.
             </p>
           </section>
 
@@ -252,9 +257,20 @@ export default function Privacy() {
             </p>
             <p className="text-white/80">
               <strong>DevCon1 Solutions LLC</strong><br />
+              7860 W Commercial Blvd, #707<br />
+              Lauderhill, FL 33351<br />
+              United States<br />
               Email:{" "}
               <a href="mailto:daniel@devcon1solutions.com" className="text-indigo-400 hover:text-indigo-300 underline">
                 daniel@devcon1solutions.com
+              </a><br />
+              Phone:{" "}
+              <a href="tel:+19545806829" className="text-indigo-400 hover:text-indigo-300 underline">
+                (954) 580-6829
+              </a><br />
+              Contact Form:{" "}
+              <a href="/contact" className="text-indigo-400 hover:text-indigo-300 underline">
+                devcon1solutions.com/contact
               </a>
             </p>
           </section>
