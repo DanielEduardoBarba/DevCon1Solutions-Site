@@ -1,7 +1,8 @@
 import SpinnerSVG from "../components/componentassets/SpinnerSVG"
 import { useState } from "react"
 import { server } from "../server"
-import secrets from '../secrets.json'
+
+const API_KEY = import.meta.env.VITE_API_KEY
 
 export default function Contact() {
   const [servRes, setServRes] = useState("")
@@ -30,7 +31,7 @@ export default function Contact() {
     if (isSent) return
     setIsSent(true)
 
-    const pkg = { ...form, key: secrets?.key }
+    const pkg = { ...form, key: API_KEY }
 
     fetch(`${server()}/devcon/contact/form`, {
       method: "POST",
@@ -72,23 +73,27 @@ export default function Contact() {
             </div>
           )}
 
-          {/* <div className="mb-8 flex flex-col items-center">
-            <p className="text-white/60 text-center">
-              Text/Call:{" "}
-              <a href="tel:+19549020115" className="text-white/90 hover:text-white transition-colors font-medium">
-                (954) 902-0115
+          {!servRes && (
+            <div className="mb-8 flex flex-col items-center">
+              <p className="text-white/60 text-center">
+                Text/Call:{" "}
+                <a href="tel:+19545806829" className="text-white/90 hover:text-white transition-colors font-medium">
+                  (954) 580-6829
+                </a>
+              </p>
+              <a
+                href="tel:+19545806829"
+                className="cta-button mt-4 text-sm !py-2.5 !px-6"
+              >
+                Call Now!
               </a>
-            </p>
-            <a
-              href="tel:+19549020115"
-              className="cta-button mt-4 text-sm !py-2.5 !px-6"
-            >
-              Call Now!
-            </a>
-            {!servRes && (
-              <p className="text-white/40 mt-6 text-sm">Or leave us a message</p>
-            )}
-          </div> */}
+              <div className="flex items-center w-full my-6 gap-3">
+                <span className="flex-1 h-px bg-white/10" />
+                <span className="text-white/40 text-xs uppercase tracking-widest">or leave us a message</span>
+                <span className="flex-1 h-px bg-white/10" />
+              </div>
+            </div>
+          )}
 
           {!servRes ? (
             <div className="space-y-4">
@@ -143,6 +148,11 @@ export default function Contact() {
               <div className="pt-4">
                 <p className="text-white/40 text-sm">or reach us directly at</p>
                 <p className="text-white font-medium mt-1">daniel@devcon1solutions.com</p>
+                <p className="text-white font-medium mt-1">
+                  <a href="tel:+19545806829" className="hover:text-indigo-300 transition-colors">
+                    (954) 580-6829
+                  </a>
+                </p>
               </div>
             </div>
           )}

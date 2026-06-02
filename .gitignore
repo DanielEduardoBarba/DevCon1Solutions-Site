@@ -8,6 +8,9 @@
 package-lock.json
 fb.json
 secrets.json
+.env
+.env.*
+!.env.example
 firebase-debug.log
 
 # testing

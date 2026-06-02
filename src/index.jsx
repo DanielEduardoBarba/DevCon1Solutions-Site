@@ -10,6 +10,7 @@ const Services = lazy(() => import('./scenes/Services'))
 const AboutUs = lazy(() => import('./scenes/AboutUs'))
 const Apps = lazy(() => import('./scenes/Apps'))
 const Contact = lazy(() => import('./scenes/Contact'))
+const Privacy = lazy(() => import('./scenes/Privacy'))
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
@@ -29,6 +30,8 @@ root.render(
           <Route path="demoapp" element={<Navigate to="/apps" replace />} />
           <Route path="contact" element={<Suspense fallback={<LoadingPage />}><Contact /></Suspense>} />
           <Route path="contactus" element={<Navigate to="/contact" replace />} />
+          <Route path="privacy" element={<Suspense fallback={<LoadingPage />}><Privacy /></Suspense>} />
+          <Route path="privacy-policy" element={<Navigate to="/privacy" replace />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

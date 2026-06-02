@@ -10,7 +10,13 @@ export default function Footer() {
       <p className="hidden md:block">
         DevCon1 Solutions LLC, All Rights Reserved
       </p>
-      <p>Copyright &copy; {new Date().getFullYear()}</p>
+      <div className="flex items-center gap-3">
+        <a href="/privacy" className="hover:text-white/70 transition-colors">
+          Privacy Policy
+        </a>
+        <span className="text-white/20">|</span>
+        <p>Copyright &copy; {new Date().getFullYear()}</p>
+      </div>
     </footer>
   )
 }
