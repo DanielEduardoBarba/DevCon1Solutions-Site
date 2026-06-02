@@ -195,7 +195,7 @@ export default function FredCompanion({ mood = "neutral", trigger = "", size = 5
           }}
         >
           <div className="glass-card !rounded-xl !rounded-bl-none px-3 py-2 text-sm text-white/80 min-w-[120px] max-w-[220px]">
-            <p className="text-[10px] text-red-400/70 font-bold mb-0.5">Fred</p>
+            <p className="text-[10px] text-[#4fd1ff]/70 font-bold mb-0.5">Fred</p>
             <p className="text-xs leading-relaxed min-h-[1.5em]">
               {displayText}
               {isTyping && <span className="inline-block w-[2px] h-[10px] bg-white/50 ml-[1px] animate-pulse align-middle" />}

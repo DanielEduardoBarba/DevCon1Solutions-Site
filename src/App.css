@@ -13,7 +13,8 @@
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  background: linear-gradient(135deg, #08080a 0%, #0d0c0e 32%, #120a0c 64%, #09090b 100%);
+  background:
+    radial-gradient(130% 95% at 50% -8%, #34373e 0%, #282b31 34%, #1d1f25 68%, #15171b 100%);
 }
 
 /* ===== Animated Background ===== */
@@ -22,6 +23,26 @@
   inset: 0;
   z-index: 0;
   overflow: hidden;
+  pointer-events: none;
+}
+
+/* ===== 3D Perspective Floor Grid (depth / spatial wall effect) ===== */
+.animated-bg::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -8%;
+  width: 220%;
+  height: 62%;
+  transform: translateX(-50%) perspective(440px) rotateX(62deg);
+  transform-origin: bottom center;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 46px 46px;
+  -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 78%);
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 78%);
+  opacity: 0.55;
   pointer-events: none;
 }
 
@@ -44,7 +65,7 @@
 .bg-orb-2 {
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(196, 16, 38, 0.26), transparent 70%);
+  background: radial-gradient(circle, rgba(225, 78, 96, 0.20), transparent 70%);
   bottom: -200px;
   right: -100px;
   animation: floatOrb2 30s ease-in-out infinite;
@@ -81,7 +102,7 @@
 .bg-orb-4 {
   width: 350px;
   height: 350px;
-  background: radial-gradient(circle, rgba(220, 38, 48, 0.16), transparent 70%);
+  background: radial-gradient(circle, rgba(235, 96, 112, 0.15), transparent 70%);
   top: 30%;
   right: 20%;
   animation: floatOrb4 22s ease-in-out infinite;
@@ -178,7 +199,7 @@
 
 /* ===== Gradient Text ===== */
 .gradient-text {
-  background: linear-gradient(135deg, #ffffff 0%, #d7dbe4 42%, #c61026 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #dfe3ea 40%, #e8627a 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -192,7 +213,7 @@
   font-weight: 600;
   font-size: 1rem;
   color: #fff;
-  background: linear-gradient(135deg, #c61026, #7a0c16);
+  background: linear-gradient(135deg, #e0566a, #b22e3f);
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -202,7 +223,7 @@
 
 .cta-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 20px 40px rgba(196, 16, 38, 0.4);
+  box-shadow: 0 20px 40px rgba(224, 86, 106, 0.38);
 }
 
 .cta-button:active {
