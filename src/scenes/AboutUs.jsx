@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import DAN from "../assets/daniel.jpg"
+import GABBY from "../assets/gabby.png"
 import LINKEDIN from "../assets/linkedinLogo.png"
 import GITHUB from "../assets/github-mark-white.png"
 
@@ -73,6 +74,36 @@ export default function AboutUs() {
             </div>
           </div>
         </div>
+
+        {/* Gabby Card */}
+        <div
+          className="glass-card p-6 md:p-10 mt-8"
+          style={{
+            opacity: show ? 1 : 0,
+            transform: show ? 'translateY(0)' : 'translateY(40px)',
+            transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s',
+          }}
+        >
+          <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
+            <img
+              src={GABBY}
+              alt="Gabriela - Accounting & Bookkeeping at DevCon1 Solutions"
+              className="w-40 h-40 md:w-52 md:h-52 object-cover rounded-2xl border border-white/10 flex-shrink-0"
+              loading="lazy"
+            />
+            <div className="flex flex-col items-center md:items-start text-center md:text-left">
+              <h3 className="text-2xl md:text-3xl font-bold text-white mb-1">Gabby</h3>
+              <p className="text-sm text-red-400/80 mb-6 font-medium">Accounting & Bookkeeping</p>
+              <p className="text-white/70 text-base md:text-lg leading-relaxed mb-8">
+                Gabriela brings over 6 years of experience in accounting, bookkeeping, and payroll.
+                Known for her proactive and practical approach, she values building trust and respect
+                with her clients, focusing on improving their financial health and transparency.
+              </p>
+            </div>
+          </div>
+        </div>
+
+
       </div>
     </div>
   )
