@@ -58,7 +58,7 @@ export default function Privacy() {
               This Privacy Policy ("Policy") describes how <strong>DevCon1 Solutions LLC</strong>
               {" "}("DevCon1," "we," "us," or "our") collects, uses, discloses, and safeguards
               information when you visit{" "}
-              <a href="https://devcon1solutions.com" className="text-indigo-400 hover:text-indigo-300 underline">devcon1solutions.com</a>{" "}
+              <a href="https://devcon1solutions.com" className="text-red-400 hover:text-red-300 underline">devcon1solutions.com</a>{" "}
               (the "Site"), interact with our applications, demos, or chat features
               (collectively, the "Services"), or otherwise communicate with us. By accessing or
               using the Services, you agree to the terms of this Policy. If you do not agree,
@@ -261,15 +261,15 @@ export default function Privacy() {
               Lauderhill, FL 33351<br />
               United States<br />
               Email:{" "}
-              <a href="mailto:daniel@devcon1solutions.com" className="text-indigo-400 hover:text-indigo-300 underline">
+              <a href="mailto:daniel@devcon1solutions.com" className="text-red-400 hover:text-red-300 underline">
                 daniel@devcon1solutions.com
               </a><br />
               Phone:{" "}
-              <a href="tel:+19545806829" className="text-indigo-400 hover:text-indigo-300 underline">
+              <a href="tel:+19545806829" className="text-red-400 hover:text-red-300 underline">
                 (954) 580-6829
               </a><br />
               Contact Form:{" "}
-              <a href="/contact" className="text-indigo-400 hover:text-indigo-300 underline">
+              <a href="/contact" className="text-red-400 hover:text-red-300 underline">
                 devcon1solutions.com/contact
               </a>
             </p>

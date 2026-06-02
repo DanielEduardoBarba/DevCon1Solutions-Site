@@ -121,7 +121,7 @@ export default function QRApp({ embedded = false }) {
           onChange={(e) => setText(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleGenerate()}
           placeholder="Enter URL, text, etc..."
-          className="w-full py-3 px-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all"
+          className="w-full py-3 px-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-500/50 transition-all"
         />
         <button
           onClick={handleGenerate}

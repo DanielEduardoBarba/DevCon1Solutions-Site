@@ -23,7 +23,7 @@ export default function Home() {
         {/* Logo image — adjust inset values to control how much each edge hides */}
         {/* <div style={{
             clipPath: "inset(4% 8% 12% 8% round 1.5rem)",
-          }} className="w-56 md:w-72 lg:w-80 my-8 fade-in-up rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-indigo-500/20">
+          }} className="w-56 md:w-72 lg:w-80 my-8 fade-in-up rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-red-500/20">
           <img
             src={devCon1Full}
             alt="DevCon1 Solutions - Software, IT, and Custom Solutions"

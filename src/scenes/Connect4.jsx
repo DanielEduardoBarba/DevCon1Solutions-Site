@@ -237,7 +237,7 @@ export default function Connect4() {
       </div>
 
       {/* Board */}
-      <div className="bg-indigo-950/60 rounded-2xl p-2 sm:p-3 border border-indigo-500/20">
+      <div className="bg-red-950/60 rounded-2xl p-2 sm:p-3 border border-red-500/20">
         {/* Column hover indicators */}
         <div className="grid grid-cols-7 gap-1.5 sm:gap-2 mb-1">
           {Array.from({ length: COLS }, (_, c) => (

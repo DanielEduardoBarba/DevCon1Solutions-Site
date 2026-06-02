@@ -111,9 +111,9 @@ export default function Apps() {
           <circle cx="8" cy="17" r="1" /><circle cx="16" cy="17" r="1" />
         </svg>
       ),
-      gradient: "from-violet-500/20 to-fuchsia-500/20",
-      borderColor: "border-violet-500/20 hover:border-violet-500/40",
-      accentColor: "text-violet-400",
+      gradient: "from-rose-500/20 to-red-500/20",
+      borderColor: "border-rose-500/20 hover:border-rose-500/40",
+      accentColor: "text-rose-400",
       tag: "3D Demo",
     },
   ]

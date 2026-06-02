@@ -318,7 +318,7 @@ export default function Chat() {
           <div className="relative transition-transform duration-300 hover:scale-110 active:scale-95">
             <FaceChatSVG w={32} h={32} alive mood="happy" />
             {/* Pulse ring */}
-            <div className="absolute inset-0 rounded-full border-2 border-indigo-400/30 animate-ping" style={{ animationDuration: "2.5s" }} />
+            <div className="absolute inset-0 rounded-full border-2 border-red-400/30 animate-ping" style={{ animationDuration: "2.5s" }} />
           </div>
         </button>
       )}
@@ -333,7 +333,7 @@ export default function Chat() {
           pointerEvents: expanded ? "auto" : "none",
         }}
       >
-        <div className="glass-card !rounded-none !rounded-tr-2xl !rounded-br-2xl p-3 pr-4 !bg-indigo-950/40 !border-indigo-500/15 max-w-[300px]">
+        <div className="glass-card !rounded-none !rounded-tr-2xl !rounded-br-2xl p-3 pr-4 !bg-red-950/40 !border-red-500/15 max-w-[300px]">
           {/* Header row */}
           <div className="flex items-center gap-3 mb-2">
             <div className="flex-shrink-0 transition-transform duration-500 ease-out"
@@ -342,7 +342,7 @@ export default function Chat() {
               <FaceChatSVG w={40} h={40} alive mood={mood} />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-[10px] text-indigo-400/60 font-bold">Fred</p>
+              <p className="text-[10px] text-red-400/60 font-bold">Fred</p>
               <p className="text-[9px] text-white/25">DevCon1 Assistant</p>
             </div>
             {/* Collapse button */}
@@ -389,7 +389,7 @@ export default function Chat() {
               onClick={() => {
                 speak(pickRandom(LINES.menuPrompt), showMenuAfterSpeech)
               }}
-              className="text-xs text-indigo-400/60 hover:text-indigo-300 transition-colors cursor-pointer font-medium"
+              className="text-xs text-red-400/60 hover:text-red-300 transition-colors cursor-pointer font-medium"
             >
               Tap to chat →
             </button>

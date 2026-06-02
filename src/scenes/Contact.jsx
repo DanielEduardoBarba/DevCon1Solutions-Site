@@ -104,7 +104,7 @@ export default function Contact() {
                   value={form.name}
                   onChange={handleChange}
                   placeholder="Name"
-                  className="w-full py-3 px-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all"
+                  className="w-full py-3 px-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500/50 transition-all"
                 />
                 <input
                   type="text"
@@ -112,7 +112,7 @@ export default function Contact() {
                   value={form.phone}
                   onChange={handleChange}
                   placeholder="Phone"
-                  className="w-full py-3 px-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all"
+                  className="w-full py-3 px-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500/50 transition-all"
                 />
               </div>
               <input
@@ -121,7 +121,7 @@ export default function Contact() {
                 value={form.email}
                 onChange={handleChange}
                 placeholder="Email"
-                className="w-full py-3 px-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all"
+                className="w-full py-3 px-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500/50 transition-all"
               />
               <textarea
                 name="comment"
@@ -129,7 +129,7 @@ export default function Contact() {
                 onChange={handleChange}
                 placeholder="Your message..."
                 rows={4}
-                className="w-full py-3 px-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all resize-none"
+                className="w-full py-3 px-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500/50 transition-all resize-none"
               />
               {!isSent ? (
                 <button type="submit" className="cta-button w-full">
@@ -149,7 +149,7 @@ export default function Contact() {
                 <p className="text-white/40 text-sm">or reach us directly at</p>
                 <p className="text-white font-medium mt-1">daniel@devcon1solutions.com</p>
                 <p className="text-white font-medium mt-1">
-                  <a href="tel:+19545806829" className="hover:text-indigo-300 transition-colors">
+                  <a href="tel:+19545806829" className="hover:text-red-300 transition-colors">
                     (954) 580-6829
                   </a>
                 </p>

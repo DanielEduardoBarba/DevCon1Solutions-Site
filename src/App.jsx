@@ -15,6 +15,7 @@ export default function App() {
   const [appFullscreen, setAppFullscreen] = useState(false)
   const location = useLocation()
   const lsAppName = "devConUser"
+  const isMarkour = location.pathname.startsWith('/markour')
 
   useEffect(() => {
     getUser()
@@ -50,6 +51,7 @@ export default function App() {
     { label: "Services", path: "/services" },
     { label: "About Us", path: "/about" },
     { label: "Apps", path: "/apps" },
+    { label: "Markour", path: "/markour" },
     { label: "Contact Us", path: "/contact" },
   ]
 
@@ -60,8 +62,8 @@ export default function App() {
       delay,
       appFullscreen, setAppFullscreen,
     }}>
-      <div className="app-wrapper">
-        <div className="animated-bg" aria-hidden="true">
+      <div className={`app-wrapper${isMarkour ? ' markour-theme' : ''}`}>
+        <div className={`animated-bg${isMarkour ? ' markour-theme' : ''}`} aria-hidden="true">
           <div className="bg-orb bg-orb-1" />
           <div className="bg-orb bg-orb-2" />
           <div className="bg-orb bg-orb-3" />

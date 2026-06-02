@@ -13,7 +13,7 @@
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  background: linear-gradient(135deg, #0a0a1a 0%, #0d0d1f 30%, #0f0a1e 60%, #0a0f1a 100%);
+  background: linear-gradient(135deg, #08080a 0%, #0d0c0e 32%, #120a0c 64%, #09090b 100%);
 }
 
 /* ===== Animated Background ===== */
@@ -35,7 +35,7 @@
 .bg-orb-1 {
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(79, 70, 229, 0.35), transparent 70%);
+  background: radial-gradient(circle, rgba(198, 205, 220, 0.16), transparent 70%);
   top: -200px;
   left: -100px;
   animation: floatOrb1 25s ease-in-out infinite;
@@ -44,7 +44,7 @@
 .bg-orb-2 {
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.25), transparent 70%);
+  background: radial-gradient(circle, rgba(196, 16, 38, 0.26), transparent 70%);
   bottom: -200px;
   right: -100px;
   animation: floatOrb2 30s ease-in-out infinite;
@@ -53,7 +53,7 @@
 .bg-orb-3 {
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, rgba(6, 182, 212, 0.2), transparent 70%);
+  background: radial-gradient(circle, rgba(170, 178, 194, 0.14), transparent 70%);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -81,7 +81,7 @@
 .bg-orb-4 {
   width: 350px;
   height: 350px;
-  background: radial-gradient(circle, rgba(236, 72, 153, 0.15), transparent 70%);
+  background: radial-gradient(circle, rgba(220, 38, 48, 0.16), transparent 70%);
   top: 30%;
   right: 20%;
   animation: floatOrb4 22s ease-in-out infinite;
@@ -178,7 +178,7 @@
 
 /* ===== Gradient Text ===== */
 .gradient-text {
-  background: linear-gradient(135deg, #fff 0%, #a78bfa 50%, #06b6d4 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #d7dbe4 42%, #c61026 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -192,7 +192,7 @@
   font-weight: 600;
   font-size: 1rem;
   color: #fff;
-  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  background: linear-gradient(135deg, #c61026, #7a0c16);
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -202,7 +202,7 @@
 
 .cta-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 20px 40px rgba(79, 70, 229, 0.4);
+  box-shadow: 0 20px 40px rgba(196, 16, 38, 0.4);
 }
 
 .cta-button:active {
@@ -223,4 +223,289 @@
     opacity: 1;
     transform: translateY(0) scale(1);
   }
+}
+
+/* =====================================================================
+   Markour — App marketing page
+   ===================================================================== */
+.mk {
+  --mk-blue: #2d9cf0;
+  --mk-blue-deep: #1877f2;
+  --mk-cyan: #4fd1ff;
+  --mk-ink: #14151a;
+}
+
+/* Blue-ink gradient headline */
+.mk-gradient-text {
+  background: linear-gradient(120deg, #ffffff 0%, #9fd6ff 45%, #2d9cf0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Subtle whiteboard grid backdrop */
+.mk-grid-bg {
+  background-image:
+    linear-gradient(rgba(45, 156, 240, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(45, 156, 240, 0.07) 1px, transparent 1px);
+  background-size: 30px 30px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 75%);
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 75%);
+}
+
+/* Glow halo behind hero device */
+.mk-halo {
+  position: absolute;
+  inset: -8% -6%;
+  background: radial-gradient(circle at 50% 45%, rgba(45, 156, 240, 0.55), rgba(45, 156, 240, 0.12) 40%, transparent 70%);
+  filter: blur(30px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Phone mockup */
+.mk-phone {
+  position: relative;
+  border-radius: 46px;
+  padding: 11px;
+  background: linear-gradient(155deg, #23242c 0%, #0c0c10 100%);
+  box-shadow:
+    0 50px 100px -28px rgba(0, 0, 0, 0.85),
+    0 0 0 1.5px rgba(255, 255, 255, 0.07),
+    inset 0 0 0 2px rgba(255, 255, 255, 0.04);
+}
+.mk-phone::before {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 34%;
+  height: 26px;
+  background: #0c0c10;
+  border-radius: 0 0 16px 16px;
+  z-index: 3;
+}
+.mk-phone img {
+  display: block;
+  width: 100%;
+  border-radius: 36px;
+}
+
+/* iPad mockup */
+.mk-pad {
+  position: relative;
+  border-radius: 30px;
+  padding: 14px;
+  background: linear-gradient(155deg, #23242c 0%, #0c0c10 100%);
+  box-shadow:
+    0 50px 110px -30px rgba(0, 0, 0, 0.85),
+    0 0 0 1.5px rgba(255, 255, 255, 0.07),
+    inset 0 0 0 2px rgba(255, 255, 255, 0.04);
+}
+.mk-pad img {
+  display: block;
+  width: 100%;
+  border-radius: 16px;
+}
+
+/* Floating motion */
+@keyframes mkFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-18px) rotate(-0.6deg); }
+}
+.mk-float { animation: mkFloat 7s ease-in-out infinite; }
+.mk-float-slow { animation: mkFloat 9s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mk-float, .mk-float-slow { animation: none; }
+}
+
+/* Hero ink signature draw-on */
+.mk-ink-path {
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
+  animation: mkDraw 2.6s cubic-bezier(0.65, 0, 0.35, 1) 0.3s forwards;
+}
+@keyframes mkDraw { to { stroke-dashoffset: 0; } }
+
+/* Markour CTA badge (App Store style) */
+.mk-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 22px;
+  border-radius: 16px;
+  background: #000;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.mk-badge:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 16px 40px -12px rgba(45, 156, 240, 0.5);
+}
+
+/* Primary blue CTA */
+.mk-cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 30px;
+  border-radius: 100px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, var(--mk-blue), var(--mk-blue-deep));
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+.mk-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 45px -10px rgba(45, 156, 240, 0.6);
+}
+.mk-cta::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: skewX(-20deg);
+  animation: mkShine 4.5s ease-in-out infinite;
+}
+@keyframes mkShine {
+  0%, 60% { left: -120%; }
+  100% { left: 130%; }
+}
+
+/* Feature card */
+.mk-feature {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  padding: 26px;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, background 0.4s ease;
+}
+.mk-feature:hover {
+  transform: translateY(-6px);
+  border-color: rgba(45, 156, 240, 0.4);
+  background: rgba(45, 156, 240, 0.06);
+}
+.mk-feature-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, rgba(45, 156, 240, 0.22), rgba(24, 119, 242, 0.1));
+  border: 1px solid rgba(45, 156, 240, 0.25);
+  color: var(--mk-cyan);
+}
+
+/* Screenshot marquee */
+.mk-marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.mk-marquee-track {
+  display: flex;
+  gap: 26px;
+  width: max-content;
+  animation: mkMarquee 46s linear infinite;
+}
+.mk-marquee:hover .mk-marquee-track { animation-play-state: paused; }
+@keyframes mkMarquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Section reveal on scroll */
+.mk-reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.mk-reveal.mk-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Live collaboration cursor dot */
+.mk-cursor-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50% 50% 50% 2px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+/* =====================================================================
+   Markour — route-scoped page theme (overrides DevCon palette)
+   ===================================================================== */
+.app-wrapper.markour-theme {
+  background: linear-gradient(135deg, #050c18 0%, #081627 32%, #06121f 64%, #04101d 100%);
+}
+
+/* Repaint the ambient orbs in Markour's blue / cyan palette */
+.animated-bg.markour-theme .bg-orb-1 {
+  background: radial-gradient(circle, rgba(45, 156, 240, 0.40), transparent 70%);
+}
+.animated-bg.markour-theme .bg-orb-2 {
+  background: radial-gradient(circle, rgba(79, 209, 255, 0.26), transparent 70%);
+}
+.animated-bg.markour-theme .bg-orb-3 {
+  background: radial-gradient(circle, rgba(24, 119, 242, 0.24), transparent 70%);
+}
+.animated-bg.markour-theme .bg-orb-4 {
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.18), transparent 70%);
+}
+
+/* Faint whiteboard grid woven into the ambient background */
+.animated-bg.markour-theme::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(120, 190, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(120, 190, 255, 0.05) 1px, transparent 1px);
+  background-size: 34px 34px;
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, #000 20%, transparent 80%);
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, #000 20%, transparent 80%);
+  pointer-events: none;
+}
+
+/* ===== Markour-themed navigation bar ===== */
+.mk-nav-link-active {
+  background: linear-gradient(135deg, rgba(45, 156, 240, 0.95), rgba(24, 119, 242, 0.95)) !important;
+  color: #fff !important;
+  box-shadow: 0 6px 18px -6px rgba(45, 156, 240, 0.7);
+}
+.mk-nav-link-idle:hover {
+  background: rgba(45, 156, 240, 0.14) !important;
+  color: #eaf6ff !important;
+}
+.mk-nav-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #cdeafe;
+  background: rgba(45, 156, 240, 0.16);
+  border: 1px solid rgba(45, 156, 240, 0.35);
 }

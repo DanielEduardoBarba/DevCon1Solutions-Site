@@ -45,7 +45,7 @@ export default function AboutUs() {
             />
             <div className="flex flex-col items-center md:items-start text-center md:text-left">
               <h3 className="text-2xl md:text-3xl font-bold text-white mb-1">Daniel</h3>
-              <p className="text-sm text-indigo-400/80 mb-6 font-medium">Founder & Lead Engineer</p>
+              <p className="text-sm text-red-400/80 mb-6 font-medium">Founder & Lead Engineer</p>
               <p className="text-white/70 text-base md:text-lg leading-relaxed mb-8">
                 For Daniel, as a former machinist and product developer, building and design is both a trade and hobby.
                 He loves to optimize and create new systems and solutions for clients of all types.

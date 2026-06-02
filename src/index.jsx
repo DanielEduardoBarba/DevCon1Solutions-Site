@@ -9,6 +9,7 @@ const Home = lazy(() => import('./scenes/Home'))
 const Services = lazy(() => import('./scenes/Services'))
 const AboutUs = lazy(() => import('./scenes/AboutUs'))
 const Apps = lazy(() => import('./scenes/Apps'))
+const Markour = lazy(() => import('./scenes/Markour'))
 const Contact = lazy(() => import('./scenes/Contact'))
 const Privacy = lazy(() => import('./scenes/Privacy'))
 
@@ -24,6 +25,8 @@ root.render(
           <Route path="about" element={<Suspense fallback={<LoadingPage />}><AboutUs /></Suspense>} />
           <Route path="aboutus" element={<Navigate to="/about" replace />} />
           <Route path="apps" element={<Suspense fallback={<LoadingPage />}><Apps /></Suspense>} />
+          <Route path="markour" element={<Suspense fallback={<LoadingPage />}><Markour /></Suspense>} />
+          <Route path="markour-board" element={<Navigate to="/markour" replace />} />
           <Route path="qr" element={<Navigate to="/apps" replace />} />
           <Route path="qrapp" element={<Navigate to="/apps" replace />} />
           <Route path="demo" element={<Navigate to="/apps" replace />} />

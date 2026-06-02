@@ -179,7 +179,7 @@ export default function TicTacToe() {
               flex items-center justify-center
               transition-all duration-200 cursor-pointer
               ${winLine.includes(i)
-                ? 'bg-indigo-500/30 border-indigo-400/60 scale-105'
+                ? 'bg-red-500/30 border-red-400/60 scale-105'
                 : cell
                 ? 'bg-white/5 border-white/10'
                 : 'bg-white/[0.03] border-white/5 hover:bg-white/10 hover:border-white/20'}
