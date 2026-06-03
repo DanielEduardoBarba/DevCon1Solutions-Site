@@ -5,6 +5,9 @@ const TAGLINE = "Draw. Collaborate. Create."
 const MARKETING_URL = "https://devcon1solutions.com/markour"
 const BLUE = "#2d9cf0"
 
+// Official Apple "Download on the App Store" badge (Apple Marketing Tools, black/en-us)
+const APP_STORE_BADGE = "https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/en-us"
+
 /* ---------- Inline icons ---------- */
 const Icon = {
   Pen: (p) => (
@@ -67,11 +70,6 @@ const Icon = {
   Save: (p) => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...p}>
       <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" /><path d="M17 21v-8H7v8M7 3v5h8" />
-    </svg>
-  ),
-  Apple: (p) => (
-    <svg viewBox="0 0 24 24" fill="currentColor" {...p}>
-      <path d="M16.365 1.43c0 1.14-.42 2.2-1.12 2.98-.74.86-1.96 1.53-3.04 1.45-.13-1.1.42-2.27 1.07-3 .74-.83 2.05-1.45 3.09-1.43zM20.5 17.04c-.55 1.27-.82 1.84-1.53 2.96-.99 1.56-2.39 3.5-4.12 3.51-1.54.02-1.93-1-4.02-.99-2.08.01-2.52 1.01-4.06.99-1.73-.02-3.05-1.78-4.04-3.34C.32 17.4-.32 13.4 1.13 10.7c1.03-1.93 2.66-3.05 4.2-3.05 1.56 0 2.55 1.03 4.02 1.03 1.43 0 2.3-1.04 4.1-1.04 1.37 0 2.82.74 3.86 2.03-3.39 1.86-2.84 6.7.19 7.37z" />
     </svg>
   ),
 }
@@ -214,12 +212,8 @@ export default function Markour() {
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-4 fade-in-up fade-in-up-delay-4">
-              <a href="#" className="mk-badge" aria-label="Coming soon to the App Store">
-                <Icon.Apple className="w-7 h-7" />
-                <span className="text-left leading-tight">
-                  <span className="block text-[10px] uppercase tracking-wider text-white/60">Coming soon on the</span>
-                  <span className="block text-lg font-semibold -mt-0.5">App Store</span>
-                </span>
+              <a href="#" className="mk-store-badge" aria-label="Coming soon on the App Store">
+                <img src={APP_STORE_BADGE} alt="Download on the App Store" height="56" loading="lazy" />
               </a>
               <button onClick={scrollToFeatures} className="mk-cta">
                 Explore Features
@@ -460,7 +454,7 @@ export default function Markour() {
           style={{ background: "linear-gradient(135deg, rgba(45,156,240,0.18), rgba(24,119,242,0.08))", border: "1px solid rgba(45,156,240,0.25)" }}>
           <div className="mk-grid-bg absolute inset-0 opacity-60" aria-hidden="true" />
           <div className="relative">
-            <img src="/markour/markour-logo.png" alt="Markour logo" className="w-20 h-20 mx-auto mb-6 mk-float" style={{ filter: "drop-shadow(0 12px 30px rgba(45,156,240,0.45))" }} />
+            <img src="/markour/markour-logo.png" alt="Markour logo" className="w-20 h-20 mx-auto mb-6 mk-float rounded-xl" style={{ filter: "drop-shadow(0 12px 30px rgba(45,156,240,0.45))" }} />
             <h2 className="text-4xl md:text-6xl font-extrabold text-white leading-tight">
               Ready to <span className="mk-gradient-text">create together?</span>
             </h2>
@@ -469,12 +463,8 @@ export default function Markour() {
               collaborate, and create — wherever inspiration strikes.
             </p>
             <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-              <a href="#" className="mk-badge" aria-label="Coming soon to the App Store">
-                <Icon.Apple className="w-7 h-7" />
-                <span className="text-left leading-tight">
-                  <span className="block text-[10px] uppercase tracking-wider text-white/60">Coming soon on the</span>
-                  <span className="block text-lg font-semibold -mt-0.5">App Store</span>
-                </span>
+              <a href="#" className="mk-store-badge" aria-label="Coming soon on the App Store">
+                <img src={APP_STORE_BADGE} alt="Download on the App Store" height="56" loading="lazy" />
               </a>
               <a href="/contact" className="mk-cta">Get notified</a>
             </div>

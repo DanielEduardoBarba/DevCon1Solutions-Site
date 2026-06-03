@@ -298,13 +298,14 @@
 .mk-phone::before {
   content: '';
   position: absolute;
-  top: 18px;
+  top: 13px;
   left: 50%;
   transform: translateX(-50%);
-  width: 34%;
-  height: 26px;
+  width: 30%;
+  max-width: 96px;
+  height: 13px;
   background: #0c0c10;
-  border-radius: 0 0 16px 16px;
+  border-radius: 999px;
   z-index: 3;
 }
 .mk-phone img {
@@ -365,6 +366,23 @@
 .mk-badge:hover {
   transform: translateY(-2px);
   border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 16px 40px -12px rgba(45, 156, 240, 0.5);
+}
+
+/* Official App Store badge */
+.mk-store-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 13px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.mk-store-badge img {
+  height: 56px;
+  width: auto;
+  display: block;
+}
+.mk-store-badge:hover {
+  transform: translateY(-2px);
   box-shadow: 0 16px 40px -12px rgba(45, 156, 240, 0.5);
 }
 
