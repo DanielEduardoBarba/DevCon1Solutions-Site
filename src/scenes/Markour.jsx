@@ -40,7 +40,8 @@ const Icon = {
   ),
   Undo: (p) => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...p}>
-      <path d="M3 7v6h6" /><path d="M3.5 13a9 9 0 1 0 2.6-8.5L3 7" />
+      <path d="M9 14 4 9l5-5" />
+      <path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H10" />
     </svg>
   ),
   Layers: (p) => (
