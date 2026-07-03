@@ -548,3 +548,261 @@
   background: rgba(45, 156, 240, 0.16);
   border: 1px solid rgba(45, 156, 240, 0.35);
 }
+
+/* =====================================================================
+   Marksman — Interactive Gun Range marketing page
+   (tactical red / gold palette — free-to-use web app by DevCon1)
+   ===================================================================== */
+.ms {
+  --ms-red: #ff4d3d;
+  --ms-red-soft: #ff7a6e;
+  --ms-gold: #ffb347;
+  --ms-ink: #0a0a0c;
+}
+
+/* Red-hot gradient headline */
+.ms-gradient-text {
+  background: linear-gradient(120deg, #ffffff 0%, #ffb9b1 42%, #ff4d3d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.ms-gradient-gold {
+  background: linear-gradient(120deg, #ffe6b0 0%, #ffb347 55%, #ff7a3d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Rangecard / reticle backdrop */
+.ms-grid-bg {
+  background-image:
+    linear-gradient(rgba(255, 77, 61, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 77, 61, 0.07) 1px, transparent 1px);
+  background-size: 34px 34px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 75%);
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 75%);
+}
+
+/* Glow halo behind hero device */
+.ms-halo {
+  position: absolute;
+  inset: -8% -6%;
+  background: radial-gradient(circle at 50% 45%, rgba(255, 77, 61, 0.5), rgba(255, 77, 61, 0.12) 42%, transparent 70%);
+  filter: blur(34px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Browser-window mockup (live web app frame) */
+.ms-browser {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  background: linear-gradient(155deg, #1b1c22 0%, #0a0a0c 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 50px 110px -30px rgba(0, 0, 0, 0.85),
+    0 0 0 1px rgba(255, 122, 110, 0.08),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+}
+.ms-browser-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.ms-browser-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+}
+.ms-browser-url {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.45);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.ms-browser iframe {
+  display: block;
+  width: 100%;
+  border: none;
+  background: #0a0a0c;
+}
+
+/* Floating motion (shared feel with mk) */
+@keyframes msFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-16px) rotate(-0.5deg); }
+}
+.ms-float { animation: msFloat 7.5s ease-in-out infinite; }
+.ms-float-slow { animation: msFloat 9.5s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .ms-float, .ms-float-slow { animation: none; }
+}
+
+/* Primary red CTA */
+.ms-cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 30px;
+  border-radius: 100px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, var(--ms-red-soft), var(--ms-red));
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+.ms-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 45px -10px rgba(255, 77, 61, 0.6);
+}
+.ms-cta::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: skewX(-20deg);
+  animation: mkShine 4.5s ease-in-out infinite;
+}
+
+/* Secondary ghost CTA */
+.ms-cta-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: 100px;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  cursor: pointer;
+  transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+.ms-cta-ghost:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 122, 110, 0.5);
+  background: rgba(255, 77, 61, 0.08);
+}
+
+/* "Free web app" pill */
+.ms-free-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffd9a3;
+  background: rgba(255, 179, 71, 0.12);
+  border: 1px solid rgba(255, 179, 71, 0.32);
+}
+
+/* Feature card */
+.ms-feature {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  padding: 26px;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, background 0.4s ease;
+}
+.ms-feature:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 77, 61, 0.4);
+  background: rgba(255, 77, 61, 0.06);
+}
+.ms-feature-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, rgba(255, 77, 61, 0.22), rgba(255, 122, 110, 0.1));
+  border: 1px solid rgba(255, 77, 61, 0.25);
+  color: var(--ms-red-soft);
+}
+
+/* Section reveal on scroll */
+.ms-reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ms-reveal.ms-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =====================================================================
+   Marksman — route-scoped page theme
+   ===================================================================== */
+.app-wrapper.marksman-theme {
+  background: linear-gradient(135deg, #120607 0%, #1a0806 32%, #140505 64%, #0d0404 100%);
+}
+.animated-bg.marksman-theme .bg-orb-1 {
+  background: radial-gradient(circle, rgba(255, 77, 61, 0.34), transparent 70%);
+}
+.animated-bg.marksman-theme .bg-orb-2 {
+  background: radial-gradient(circle, rgba(255, 179, 71, 0.20), transparent 70%);
+}
+.animated-bg.marksman-theme .bg-orb-3 {
+  background: radial-gradient(circle, rgba(255, 122, 110, 0.22), transparent 70%);
+}
+.animated-bg.marksman-theme .bg-orb-4 {
+  background: radial-gradient(circle, rgba(255, 90, 61, 0.16), transparent 70%);
+}
+.animated-bg.marksman-theme::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 150, 130, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 150, 130, 0.05) 1px, transparent 1px);
+  background-size: 36px 36px;
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, #000 20%, transparent 80%);
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, #000 20%, transparent 80%);
+  pointer-events: none;
+}
+
+/* ===== Marksman-themed navigation bar ===== */
+.ms-nav-link-active {
+  background: linear-gradient(135deg, rgba(255, 77, 61, 0.95), rgba(255, 122, 110, 0.95)) !important;
+  color: #fff !important;
+  box-shadow: 0 6px 18px -6px rgba(255, 77, 61, 0.7);
+}
+.ms-nav-link-idle:hover {
+  background: rgba(255, 77, 61, 0.14) !important;
+  color: #ffeae7 !important;
+}
+.ms-nav-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #ffd2cc;
+  background: rgba(255, 77, 61, 0.16);
+  border: 1px solid rgba(255, 77, 61, 0.35);
+}

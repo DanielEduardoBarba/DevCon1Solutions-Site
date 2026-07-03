@@ -116,6 +116,21 @@ export default function Apps() {
       accentColor: "text-rose-400",
       tag: "3D Demo",
     },
+    {
+      id: "marksman",
+      title: "Marksman Shooting",
+      description: "A free web-based long-range shooting simulator. Read the wind, dial your turrets and ring steel from 50 to 3000 m.",
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" className="w-8 h-8" stroke="currentColor" strokeWidth="1.5">
+          <circle cx="12" cy="12" r="9" /><line x1="12" y1="2" x2="12" y2="6" /><line x1="12" y1="18" x2="12" y2="22" />
+          <line x1="2" y1="12" x2="6" y2="12" /><line x1="18" y1="12" x2="22" y2="12" /><circle cx="12" cy="12" r="1.5" fill="currentColor" />
+        </svg>
+      ),
+      gradient: "from-red-500/20 to-orange-500/20",
+      borderColor: "border-red-500/20 hover:border-red-500/40",
+      accentColor: "text-red-400",
+      tag: "Web App",
+    },
   ]
 
   function renderAppContent() {
@@ -132,6 +147,17 @@ export default function Apps() {
         return <Calculator />
       case "connect4":
         return <Connect4 />
+      case "marksman":
+        return (
+          <iframe
+            src="https://marksman-shooting.web.app/"
+            title="Marksman — Interactive Gun Range"
+            className="w-full h-full block"
+            style={{ border: "none", background: "#0a0a0c" }}
+            allow="fullscreen; autoplay; gamepad"
+            loading="lazy"
+          />
+        )
       case "demo":
         return (
           <Suspense fallback={
