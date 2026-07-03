@@ -227,27 +227,53 @@ export default function Marksman() {
             </div>
           </div>
 
-          {/* Live browser preview */}
+          {/* Scope reticle visual */}
           <div className="relative flex justify-center fade-in-up fade-in-up-delay-3">
             <div className="ms-halo" />
-            <div className="relative ms-float w-full max-w-[560px]">
-              <div className="ms-browser">
-                <div className="ms-browser-bar">
-                  <span className="ms-browser-dot" style={{ background: "#ff6058" }} />
-                  <span className="ms-browser-dot" style={{ background: "#ffc130" }} />
-                  <span className="ms-browser-dot" style={{ background: "#2dd840" }} />
-                  <span className="ms-browser-url">
-                    <Icon.Globe className="w-3.5 h-3.5 opacity-60" />
-                    marksman-shooting.web.app
-                  </span>
+            <div className="relative ms-float w-full max-w-[420px] aspect-square">
+              <div
+                className="absolute inset-0 rounded-full overflow-hidden"
+                style={{
+                  background: "radial-gradient(circle at 50% 42%, #14100f 0%, #0a0a0c 62%, #060606 100%)",
+                  border: "1px solid rgba(255,122,110,0.25)",
+                  boxShadow: "0 50px 110px -30px rgba(0,0,0,0.85), inset 0 0 60px rgba(0,0,0,0.7), 0 0 0 10px rgba(255,255,255,0.02)",
+                }}
+              >
+                <svg viewBox="0 0 200 200" className="absolute inset-0 w-full h-full" aria-hidden="true">
+                  <defs>
+                    <radialGradient id="msScopeVig" cx="50%" cy="50%" r="50%">
+                      <stop offset="60%" stopColor="transparent" />
+                      <stop offset="100%" stopColor="rgba(0,0,0,0.85)" />
+                    </radialGradient>
+                  </defs>
+                  {/* crosshair */}
+                  <line x1="100" y1="14" x2="100" y2="82" stroke={RED} strokeWidth="1.2" />
+                  <line x1="100" y1="118" x2="100" y2="186" stroke={RED} strokeWidth="1.2" />
+                  <line x1="14" y1="100" x2="82" y2="100" stroke={RED} strokeWidth="1.2" />
+                  <line x1="118" y1="100" x2="186" y2="100" stroke={RED} strokeWidth="1.2" />
+                  {/* mil-dot ladder below center */}
+                  {[92, 108, 124, 140, 156].map((y, i) => (
+                    <g key={i}>
+                      <line x1="94" y1={y} x2="106" y2={y} stroke="rgba(255,150,130,0.55)" strokeWidth="1" />
+                      <circle cx="100" cy={y} r="1.3" fill={GOLD} />
+                    </g>
+                  ))}
+                  {/* windage ticks */}
+                  {[76, 88, 112, 124].map((x, i) => (
+                    <line key={i} x1={x} y1="97" x2={x} y2="103" stroke="rgba(255,150,130,0.5)" strokeWidth="1" />
+                  ))}
+                  <circle cx="100" cy="100" r="2.2" fill={RED} />
+                  <circle cx="100" cy="100" r="86" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+                  <rect x="0" y="0" width="200" height="200" fill="url(#msScopeVig)" />
+                </svg>
+                {/* readout chips */}
+                <div className="absolute left-4 bottom-4 flex flex-col gap-1.5 text-[10px] font-mono">
+                  <span className="px-2 py-1 rounded bg-black/50 border border-white/10 text-white/70">RNG 850 m</span>
+                  <span className="px-2 py-1 rounded bg-black/50 border border-white/10 text-white/70">WIND 3.2 L</span>
                 </div>
-                <iframe
-                  src={APP_URL}
-                  title="Marksman Interactive Gun Range — live preview"
-                  loading="lazy"
-                  height="360"
-                  allow="fullscreen; autoplay"
-                />
+                <div className="absolute right-4 top-4 text-[10px] font-mono px-2 py-1 rounded bg-black/50 border border-white/10" style={{ color: GOLD }}>
+                  6.5 CM · 8×
+                </div>
               </div>
             </div>
           </div>
@@ -323,25 +349,36 @@ export default function Marksman() {
           </div>
 
           <div ref={addReveal} className="ms-reveal flex justify-center">
-            <div className="relative w-full max-w-[560px]">
+            <div className="relative w-full max-w-[460px]">
               <div className="ms-halo" />
-              <div className="relative ms-float-slow ms-browser">
-                <div className="ms-browser-bar">
-                  <span className="ms-browser-dot" style={{ background: "#ff6058" }} />
-                  <span className="ms-browser-dot" style={{ background: "#ffc130" }} />
-                  <span className="ms-browser-dot" style={{ background: "#2dd840" }} />
-                  <span className="ms-browser-url">
-                    <Icon.Scope className="w-3.5 h-3.5 opacity-60" />
-                    Downrange · live
+              <div className="relative ms-float-slow glass-card !rounded-2xl p-6 w-full">
+                <div className="flex items-center justify-between mb-5">
+                  <span className="text-xs uppercase tracking-[0.2em] text-white/40 font-semibold flex items-center gap-2">
+                    <Icon.Scope className="w-4 h-4" style={{ color: RED }} /> Range card
                   </span>
+                  <span className="text-[10px] font-mono px-2 py-1 rounded bg-white/5 border border-white/10" style={{ color: GOLD }}>6.5 CM</span>
                 </div>
-                <iframe
-                  src={APP_URL}
-                  title="Marksman range — live gameplay"
-                  loading="lazy"
-                  height="340"
-                  allow="fullscreen; autoplay"
-                />
+                <div className="grid grid-cols-3 text-[11px] uppercase tracking-wider text-white/35 font-semibold pb-2 mb-2 border-b border-white/10">
+                  <span>Range</span>
+                  <span className="text-center">Drop</span>
+                  <span className="text-right">Dial</span>
+                </div>
+                {[
+                  { r: "300 m", d: "-0.9 m", m: "3.0 mil" },
+                  { r: "600 m", d: "-3.8 m", m: "6.4 mil" },
+                  { r: "900 m", d: "-9.6 m", m: "10.8 mil" },
+                  { r: "1200 m", d: "-19.4 m", m: "16.2 mil" },
+                  { r: "1800 m", d: "-52.1 m", m: "29.5 mil" },
+                ].map((row, i) => (
+                  <div key={i} className="grid grid-cols-3 text-sm py-2 border-b border-white/5 last:border-0">
+                    <span className="font-mono text-white/80">{row.r}</span>
+                    <span className="font-mono text-center text-white/50">{row.d}</span>
+                    <span className="font-mono text-right" style={{ color: "#ff9a86" }}>{row.m}</span>
+                  </div>
+                ))}
+                <p className="mt-4 text-[11px] text-white/30 leading-relaxed">
+                  Illustrative solution — dial the exact values live in the app as the wind shifts.
+                </p>
               </div>
             </div>
           </div>

@@ -130,6 +130,7 @@ export default function Apps() {
       borderColor: "border-red-500/20 hover:border-red-500/40",
       accentColor: "text-red-400",
       tag: "Web App",
+      externalUrl: "https://marksman-shooting.web.app/",
     },
   ]
 
@@ -147,17 +148,6 @@ export default function Apps() {
         return <Calculator />
       case "connect4":
         return <Connect4 />
-      case "marksman":
-        return (
-          <iframe
-            src="https://marksman-shooting.web.app/"
-            title="Marksman — Interactive Gun Range"
-            className="w-full h-full block"
-            style={{ border: "none", background: "#0a0a0c" }}
-            allow="fullscreen; autoplay; gamepad"
-            loading="lazy"
-          />
-        )
       case "demo":
         return (
           <Suspense fallback={
@@ -195,7 +185,13 @@ export default function Apps() {
             {apps.map((app) => (
               <button
                 key={app.id}
-                onClick={() => { setActiveApp(app.id); setIsFullscreen(false) }}
+                onClick={() => {
+                  if (app.externalUrl) {
+                    window.open(app.externalUrl, "_blank", "noopener,noreferrer")
+                  } else {
+                    setActiveApp(app.id); setIsFullscreen(false)
+                  }
+                }}
                 className={`group glass-card !rounded-2xl p-6 text-left transition-all duration-500 border ${app.borderColor} hover:scale-[1.02] cursor-pointer`}
               >
                 <div className="flex items-start justify-between mb-4">
@@ -211,10 +207,16 @@ export default function Apps() {
                 <h3 className="text-lg font-bold text-white mb-1">{app.title}</h3>
                 <p className="text-white/40 text-xs leading-relaxed mb-3">{app.description}</p>
                 <span className={`text-xs font-medium ${app.accentColor} flex items-center gap-1.5`}>
-                  Launch
-                  <svg className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
+                  {app.externalUrl ? "Open site" : "Launch"}
+                  {app.externalUrl ? (
+                    <svg className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  ) : (
+                    <svg className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  )}
                 </span>
               </button>
             ))}
