@@ -205,6 +205,21 @@
   background-clip: text;
 }
 
+/* Keep all clipped/gradient headings bright when the browser forces its own
+   colors (Windows High Contrast / forced-colors), where clipped text would
+   otherwise be re-colored dark or made invisible. */
+@media (forced-colors: active) {
+  .gradient-text,
+  .mk-gradient-text,
+  .ms-gradient-text,
+  .ms-gradient-gold {
+    -webkit-text-fill-color: currentColor;
+    color: #ffffff;
+    background: none;
+    forced-color-adjust: none;
+  }
+}
+
 /* ===== CTA Button ===== */
 .cta-button {
   position: relative;

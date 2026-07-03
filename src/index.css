@@ -4,6 +4,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* The site is always dark-themed. Declaring the color scheme prevents browsers
+   (Chrome auto-dark, Android WebView, etc.) from re-coloring gradient/clipped
+   text and washing it out when the OS or browser is in dark mode. */
+html {
+  color-scheme: dark;
+}
+
 body {
   margin: 0;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
