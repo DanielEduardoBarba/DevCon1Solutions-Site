@@ -34,7 +34,12 @@ const Icon = {
   ),
   Bullet: (p) => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...p}>
-      <path d="M9 3h6a0 0 0 0 1 0 0v4a3 3 0 0 1-.88 2.12L12 11l-2.12-1.88A3 3 0 0 1 9 7V3z" /><rect x="9" y="11" width="6" height="10" rx="1" />
+      {/* cartridge outline: pointed bullet nose seated on the casing */}
+      <path d="M9.5 20.5 V10 C9.5 6 10.6 3 12 2.2 C13.4 3 14.5 6 14.5 10 V20.5 Z" />
+      {/* neck: where the bullet meets the case mouth */}
+      <line x1="9.5" y1="10" x2="14.5" y2="10" />
+      {/* base rim / extractor groove */}
+      <line x1="9.5" y1="17.5" x2="14.5" y2="17.5" />
     </svg>
   ),
   Gauge: (p) => (
@@ -182,29 +187,36 @@ export default function Marksman() {
                       <stop offset="100%" stopColor="rgba(0,0,0,0.85)" />
                     </radialGradient>
                   </defs>
-                  {/* crosshair */}
-                  <line x1="100" y1="14" x2="100" y2="82" stroke={RED} strokeWidth="1.2" />
-                  <line x1="100" y1="118" x2="100" y2="186" stroke={RED} strokeWidth="1.2" />
-                  <line x1="14" y1="100" x2="82" y2="100" stroke={RED} strokeWidth="1.2" />
-                  <line x1="118" y1="100" x2="186" y2="100" stroke={RED} strokeWidth="1.2" />
-                  {/* mil-dot ladder below center */}
-                  {[92, 108, 124, 140, 156].map((y, i) => (
-                    <g key={i}>
-                      <line x1="94" y1={y} x2="106" y2={y} stroke="rgba(255,150,130,0.55)" strokeWidth="1" />
-                      <circle cx="100" cy={y} r="1.3" fill={GOLD} />
-                    </g>
+
+                  {/* Thick duplex posts from the edge inward */}
+                  <line x1="100" y1="18" x2="100" y2="56" stroke={RED} strokeWidth="3.2" />
+                  <line x1="100" y1="144" x2="100" y2="182" stroke={RED} strokeWidth="3.2" />
+                  <line x1="18" y1="100" x2="56" y2="100" stroke={RED} strokeWidth="3.2" />
+                  <line x1="144" y1="100" x2="182" y2="100" stroke={RED} strokeWidth="3.2" />
+
+                  {/* Fine crosshair to the center, with a small central gap */}
+                  <line x1="100" y1="56" x2="100" y2="94" stroke={RED} strokeWidth="0.9" />
+                  <line x1="100" y1="106" x2="100" y2="144" stroke={RED} strokeWidth="0.9" />
+                  <line x1="56" y1="100" x2="94" y2="100" stroke={RED} strokeWidth="0.9" />
+                  <line x1="106" y1="100" x2="144" y2="100" stroke={RED} strokeWidth="0.9" />
+
+                  {/* Mil dots — evenly spaced on all four arms */}
+                  {[68, 84, 116, 132].map((y, i) => (
+                    <circle key={`v${i}`} cx="100" cy={y} r="1.7" fill={RED} />
                   ))}
-                  {/* windage ticks */}
-                  {[76, 88, 112, 124].map((x, i) => (
-                    <line key={i} x1={x} y1="97" x2={x} y2="103" stroke="rgba(255,150,130,0.5)" strokeWidth="1" />
+                  {[68, 84, 116, 132].map((x, i) => (
+                    <circle key={`h${i}`} cx={x} cy="100" r="1.7" fill={RED} />
                   ))}
-                  <circle cx="100" cy="100" r="2.2" fill={RED} />
+
+                  {/* Center aiming dot */}
+                  <circle cx="100" cy="100" r="1.5" fill={RED} />
+
+                  {/* Faint inner ring + vignette */}
                   <circle cx="100" cy="100" r="86" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
                   <rect x="0" y="0" width="200" height="200" fill="url(#msScopeVig)" />
                 </svg>
                 {/* readout chips */}
                 <div className="absolute left-4 bottom-4 flex flex-col gap-1.5 text-[10px] font-mono">
-                  <span className="px-2 py-1 rounded bg-black/50 border border-white/10 text-white/70">RNG 850 m</span>
                   <span className="px-2 py-1 rounded bg-black/50 border border-white/10 text-white/70">WIND 3.2 L</span>
                 </div>
                 <div className="absolute right-4 top-4 text-[10px] font-mono px-2 py-1 rounded bg-black/50 border border-white/10" style={{ color: GOLD }}>
@@ -394,7 +406,6 @@ export default function Marksman() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </a>
-              <a href="/apps" className="ms-cta-ghost">Play it embedded</a>
             </div>
             <p className="mt-8 text-xs text-white/35 max-w-lg mx-auto">
               A free web experience by DevCon1 Solutions. Audio via Freesound (CC0 / CC BY).

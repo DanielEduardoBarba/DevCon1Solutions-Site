@@ -12,8 +12,25 @@ export default function Contact() {
   const [isSent, setIsSent] = useState(false)
   const [form, setForm] = useState({ name: '', email: '', phone: '', comment: '' })
 
+  // ── Live field validity ──
+  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())
+  const phoneDigits = form.phone.replace(/[\s+\-().]/g, "")
+  const phoneValid = /^\d+$/.test(phoneDigits) && phoneDigits.length >= 7 && phoneDigits.length <= 15
+
+  // Base input styling; focus always highlights with a white border.
+  const BASE_INPUT =
+    "w-full py-3 px-4 bg-white/5 border rounded-xl text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white transition-all"
+  // Yellow border while a required field is filled but not yet compliant.
+  const borderClass = (hasValue, isValid) =>
+    hasValue && !isValid ? " border-yellow-400/70" : " border-white/10"
+
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value })
+    let { name, value } = e.target
+    // Phone: allow only digits and common separators ( +, -, spaces, (), . )
+    if (name === "phone") {
+      value = value.replace(/[^\d+\-().\s]/g, "")
+    }
+    setForm({ ...form, [name]: value })
   }
 
   const handleContact = (e) => {
@@ -28,6 +45,25 @@ export default function Contact() {
       setError("Missing:" + notify)
       return
     }
+
+    // Email must contain an "@" and a "." (with text around them)
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())
+    if (!emailOk) {
+      setError("Please enter a valid email address (must include @ and .).")
+      return
+    }
+
+    // Phone must contain only numbers (allow spaces, +, -, (), . as separators)
+    const phoneDigits = form.phone.replace(/[\s+\-().]/g, "")
+    if (!/^\d+$/.test(phoneDigits)) {
+      setError("Phone number can only contain numbers.")
+      return
+    }
+    if (phoneDigits.length < 7 || phoneDigits.length > 15) {
+      setError("Please enter a valid phone number.")
+      return
+    }
+
     setError("")
 
     if (isSent) return
@@ -52,7 +88,11 @@ export default function Contact() {
         console.log("Server responded: ", response)
         setIsSent(false)
       })
-      .catch(console.error)
+      .catch((err) => {
+        console.error("Contact form submit failed:", err)
+        setError("Couldn't reach the server. Please try again, or email daniel@devcon1solutions.com.")
+        setIsSent(false)
+      })
   }
 
   return (
@@ -106,15 +146,17 @@ export default function Contact() {
                   value={form.name}
                   onChange={handleChange}
                   placeholder="Name"
-                  className="w-full py-3 px-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500/50 transition-all"
+                  className={BASE_INPUT + " border-white/10"}
                 />
                 <input
-                  type="text"
+                  type="tel"
                   name="phone"
                   value={form.phone}
                   onChange={handleChange}
+                  inputMode="tel"
+                  autoComplete="tel"
                   placeholder="Phone"
-                  className="w-full py-3 px-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500/50 transition-all"
+                  className={BASE_INPUT + borderClass(form.phone.length > 0, phoneValid)}
                 />
               </div>
               <input
@@ -122,8 +164,10 @@ export default function Contact() {
                 name="email"
                 value={form.email}
                 onChange={handleChange}
+                inputMode="email"
+                autoComplete="email"
                 placeholder="Email"
-                className="w-full py-3 px-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500/50 transition-all"
+                className={BASE_INPUT + borderClass(form.email.length > 0, emailValid)}
               />
               <textarea
                 name="comment"
@@ -131,7 +175,7 @@ export default function Contact() {
                 onChange={handleChange}
                 placeholder="Your message..."
                 rows={4}
-                className="w-full py-3 px-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500/50 transition-all resize-none"
+                className={BASE_INPUT + " border-white/10 resize-none"}
               />
               {!isSent ? (
                 <button type="submit" className="cta-button w-full">
