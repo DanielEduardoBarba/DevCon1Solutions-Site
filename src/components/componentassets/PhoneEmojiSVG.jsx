@@ -1,3 +1,5 @@
+'use client'
+
 
 
 export default function PhoneEmojiSVG({ h, w, color1 = "green", color2="black", color3="white", color4="black"}) {

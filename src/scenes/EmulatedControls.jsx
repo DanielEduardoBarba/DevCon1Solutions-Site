@@ -1,14 +1,26 @@
-import { Suspense, lazy, useEffect, useRef, useState } from "react"
+'use client'
+
+import { useEffect, useRef, useState } from "react"
+import dynamic from "next/dynamic"
 import Pedals from "../components/Pedals"
 import ArrowSVG from "../components/componentassets/ArrowSVG"
 
-const Spline = lazy(() => import('@splinetool/react-spline'))
+// Use the default CLIENT component entry (not /next, which is an async Server
+// Component and can't be rendered from a 'use client' module). transpilePackages
+// in next.config.js makes it share the app's React instance.
+const Spline = dynamic(() => import('@splinetool/react-spline'), {
+  ssr: false,
+  loading: () => null,
+})
 
 export default function EmulatedControls() {
   const [steer, setSteer] = useState(0)
+  const [mounted, setMounted] = useState(false)
   const intervalID = useRef(null)
   const timeGap = 30
   const smallestGap = 2
+
+  useEffect(() => { setMounted(true) }, [])
 
   useEffect(() => {
     clearInterval(intervalID.current)
@@ -45,19 +57,13 @@ export default function EmulatedControls() {
 
   return (
     <div className="relative h-full min-h-[400px] w-full flex flex-col">
-      {/* Spline 3D Scene - lazy loaded */}
-      <Suspense
-        fallback={
-          <div className="flex-1 flex items-center justify-center">
-            <p className="text-white/50 text-sm">Loading 3D scene...</p>
-          </div>
-        }
-      >
+      {/* Spline 3D Scene — only after client hydration to avoid React instance conflict */}
+      {mounted && (
         <Spline
           scene="https://prod.spline.design/A1i-MMZ2Ie1NTvif/scene.splinecode"
           className="absolute inset-0 w-full h-full z-0"
         />
-      </Suspense>
+      )}
 
       {/* Controls */}
       <div className="absolute bottom-0 w-full flex flex-col-reverse lg:flex-row justify-between z-10">

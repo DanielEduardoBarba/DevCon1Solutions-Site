@@ -1,3 +1,5 @@
+'use client'
+
 
 
 export default function ComputerEmojiSVG({ h, w, color1 = "white", color2="white", color3="black", color4="black", color5="green" }) {

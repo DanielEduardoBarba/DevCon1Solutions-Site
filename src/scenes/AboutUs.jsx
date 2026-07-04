@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useState } from "react"
 import DAN from "../assets/daniel.jpg"
 import GABBY from "../assets/gabby.png"
@@ -39,7 +41,7 @@ export default function AboutUs() {
         >
           <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
             <img
-              src={DAN}
+              src={DAN.src}
               alt="Daniel Barba - Founder & Lead Engineer at DevCon1 Solutions"
               className="w-40 h-40 md:w-52 md:h-52 object-cover rounded-2xl border border-white/10 flex-shrink-0"
               loading="lazy"
@@ -60,7 +62,7 @@ export default function AboutUs() {
                   rel="noopener noreferrer"
                   className="glass-card !rounded-xl !p-2.5 hover:!bg-white/10 transition-all duration-300 hover:scale-105"
                 >
-                  <img src={LINKEDIN} alt="LinkedIn" className="h-8 w-8 object-contain" />
+                  <img src={LINKEDIN.src} alt="LinkedIn" className="h-8 w-8 object-contain" />
                 </a>
                 <a
                   href="https://github.com/DanielEduardoBarba/"
@@ -68,7 +70,7 @@ export default function AboutUs() {
                   rel="noopener noreferrer"
                   className="glass-card !rounded-xl !p-2.5 hover:!bg-white/10 transition-all duration-300 hover:scale-105"
                 >
-                  <img src={GITHUB} alt="GitHub" className="h-8 w-8 object-contain" />
+                  <img src={GITHUB.src} alt="GitHub" className="h-8 w-8 object-contain" />
                 </a>
               </div>
             </div>
@@ -86,7 +88,7 @@ export default function AboutUs() {
         >
           <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
             <img
-              src={GABBY}
+              src={GABBY.src}
               alt="Gabriela - Accounting & Bookkeeping at DevCon1 Solutions"
               className="w-40 h-40 md:w-52 md:h-52 object-cover rounded-2xl border border-white/10 flex-shrink-0"
               loading="lazy"

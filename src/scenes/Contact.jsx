@@ -1,8 +1,10 @@
+'use client'
+
 import SpinnerSVG from "../components/componentassets/SpinnerSVG"
 import { useState } from "react"
-import { server } from "../server"
+import { server } from "../lib/server"
 
-const API_KEY = import.meta.env.VITE_API_KEY
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY
 
 export default function Contact() {
   const [servRes, setServRes] = useState("")

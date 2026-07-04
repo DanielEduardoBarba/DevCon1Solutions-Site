@@ -1,3 +1,5 @@
+'use client'
+
 
 
 export default function ArrowSVG({ h, w, color = "white", deg = 0 }) {

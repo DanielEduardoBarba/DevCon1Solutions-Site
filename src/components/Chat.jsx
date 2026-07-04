@@ -1,5 +1,8 @@
+'use client'
+
 import { useEffect, useRef, useState, useCallback, useContext } from "react"
-import { useNavigate, useLocation } from "react-router-dom"
+import { useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import FaceChatSVG from "./componentassets/FaceChatSVG"
 import FredWarp from "./FredWarp"
 import AppContext from "../AppContext"
@@ -141,8 +144,8 @@ export default function Chat() {
   const dismissingRef = useRef(false)
   const dismissedRef = useRef(readDismissed())
   const panelRef = useRef(null)
-  const navigate = useNavigate()
-  const location = useLocation()
+  const router   = useRouter()
+  const pathname  = usePathname()
 
   // Trigger the Fred warp transition, then navigate
   const warpTo = useCallback((path) => {
@@ -151,10 +154,10 @@ export default function Chat() {
   }, [])
 
   const handleWarpComplete = useCallback(() => {
-    if (warpTarget) navigate(warpTarget)
+    if (warpTarget) router.push(warpTarget)
     setWarpActive(false)
     setWarpTarget(null)
-  }, [warpTarget, navigate])
+  }, [warpTarget, router])
 
   const clearTimers = useCallback(() => {
     timersRef.current.forEach(t => clearTimeout(t))
@@ -272,7 +275,7 @@ export default function Chat() {
   useEffect(() => {
     if (hasGreetedRef.current) return
     if (dismissedRef.current) { hasGreetedRef.current = true; return }
-    const isHome = location.pathname === "/" || location.pathname === "/home"
+    const isHome = pathname === "/" || pathname === "/home"
     if (!isHome) return
 
     hasGreetedRef.current = true
@@ -289,15 +292,15 @@ export default function Chat() {
         }, 600 + Math.random() * 500)
       })
     }, 3000 + Math.random() * 1500)
-  }, [location.pathname])
+  }, [pathname])
 
   // ── Page-aware comments (arrival after warp or manual nav) ──
   useEffect(() => {
     if (!hasGreetedRef.current) return
-    if (location.pathname === lastPageRef.current) return
-    lastPageRef.current = location.pathname
+    if (pathname === lastPageRef.current) return
+    lastPageRef.current = pathname
 
-    const ctx = getPageContext(location.pathname)
+    const ctx = getPageContext(pathname)
     if (!ctx) return
     if (!expanded) return // Don't auto-open on nav, just comment if open
 
@@ -306,7 +309,7 @@ export default function Chat() {
       const lines = LINES[ctx]
       if (lines) speak(pickRandom(lines), showMenuAfterSpeech)
     }, 1000)
-  }, [location.pathname, expanded])
+  }, [pathname, expanded])
 
   // ── Click-outside to dismiss ──
   useEffect(() => {

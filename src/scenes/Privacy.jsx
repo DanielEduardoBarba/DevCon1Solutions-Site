@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useState } from "react"
 
 const LAST_UPDATED = "June 2, 2026"
@@ -9,24 +11,6 @@ export default function Privacy() {
   useEffect(() => {
     const timer = setTimeout(() => setShow(true), 100)
     return () => clearTimeout(timer)
-  }, [])
-
-  useEffect(() => {
-    const prevTitle = document.title
-    const prevDesc = document.querySelector('meta[name="description"]')?.getAttribute('content')
-    const prevCanonical = document.querySelector('link[rel="canonical"]')?.getAttribute('href')
-
-    document.title = "Privacy Policy — DevCon1 Solutions"
-    const descTag = document.querySelector('meta[name="description"]')
-    if (descTag) descTag.setAttribute('content', "Privacy Policy for DevCon1 Solutions LLC — how we collect, use, store, and protect your information across our website, apps, and services.")
-    const canonical = document.querySelector('link[rel="canonical"]')
-    if (canonical) canonical.setAttribute('href', "https://devcon1solutions.com/privacy")
-
-    return () => {
-      document.title = prevTitle
-      if (descTag && prevDesc) descTag.setAttribute('content', prevDesc)
-      if (canonical && prevCanonical) canonical.setAttribute('href', prevCanonical)
-    }
   }, [])
 
   return (

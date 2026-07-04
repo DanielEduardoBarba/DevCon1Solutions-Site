@@ -1,3 +1,5 @@
+'use client'
+
 import SpinnerSVG from "./componentassets/SpinnerSVG"
 
 export default function LoadingPage() {

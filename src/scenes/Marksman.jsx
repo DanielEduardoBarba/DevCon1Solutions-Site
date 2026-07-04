@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useRef } from "react"
 
 const APP_NAME = "Marksman"
@@ -89,72 +91,6 @@ export default function Marksman() {
   const revealRef = useRef([])
   revealRef.current = []
   const addReveal = (el) => { if (el && !revealRef.current.includes(el)) revealRef.current.push(el) }
-
-  /* ---------- SEO ---------- */
-  useEffect(() => {
-    const prevTitle = document.title
-    const descTag = document.querySelector('meta[name="description"]')
-    const prevDesc = descTag?.getAttribute("content")
-    const canonical = document.querySelector('link[rel="canonical"]')
-    const prevCanonical = canonical?.getAttribute("href")
-    const ogTitle = document.querySelector('meta[property="og:title"]')
-    const prevOgTitle = ogTitle?.getAttribute("content")
-    const ogDesc = document.querySelector('meta[property="og:description"]')
-    const prevOgDesc = ogDesc?.getAttribute("content")
-    const ogImage = document.querySelector('meta[property="og:image"]')
-    const prevOgImage = ogImage?.getAttribute("content")
-    const ogUrl = document.querySelector('meta[property="og:url"]')
-    const prevOgUrl = ogUrl?.getAttribute("content")
-    const twTitle = document.querySelector('meta[name="twitter:title"]')
-    const prevTwTitle = twTitle?.getAttribute("content")
-    const twImage = document.querySelector('meta[name="twitter:image"]')
-    const prevTwImage = twImage?.getAttribute("content")
-
-    const title = "Marksman — Interactive Gun Range | Free Web-Based Shooting Simulator"
-    const desc = "Marksman is a free, browser-based long-range shooting simulator. Pick a caliber and optic, read the wind, dial your turrets in mils and put rounds on steel from 50 to 3000 m — no download required."
-    const image = `${MARKETING_URL.replace("/marksman", "")}/marksman/marksman-logo.svg`
-
-    document.title = title
-    descTag?.setAttribute("content", desc)
-    canonical?.setAttribute("href", MARKETING_URL)
-    ogTitle?.setAttribute("content", title)
-    ogDesc?.setAttribute("content", desc)
-    ogImage?.setAttribute("content", image)
-    ogUrl?.setAttribute("content", MARKETING_URL)
-    twTitle?.setAttribute("content", title)
-    twImage?.setAttribute("content", image)
-
-    const ld = document.createElement("script")
-    ld.type = "application/ld+json"
-    ld.id = "marksman-jsonld"
-    ld.text = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      name: "Marksman — Interactive Gun Range",
-      applicationCategory: "GameApplication",
-      operatingSystem: "Web browser",
-      browserRequirements: "Requires a modern web browser. No download needed.",
-      description: desc,
-      url: MARKETING_URL,
-      image,
-      offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-      author: { "@type": "Organization", name: "DevCon1 Solutions LLC", url: "https://devcon1solutions.com" },
-    })
-    document.head.appendChild(ld)
-
-    return () => {
-      document.title = prevTitle
-      if (descTag && prevDesc) descTag.setAttribute("content", prevDesc)
-      if (canonical && prevCanonical) canonical.setAttribute("href", prevCanonical)
-      if (ogTitle && prevOgTitle) ogTitle.setAttribute("content", prevOgTitle)
-      if (ogDesc && prevOgDesc) ogDesc.setAttribute("content", prevOgDesc)
-      if (ogImage && prevOgImage) ogImage.setAttribute("content", prevOgImage)
-      if (ogUrl && prevOgUrl) ogUrl.setAttribute("content", prevOgUrl)
-      if (twTitle && prevTwTitle) twTitle.setAttribute("content", prevTwTitle)
-      if (twImage && prevTwImage) twImage.setAttribute("content", prevTwImage)
-      document.getElementById("marksman-jsonld")?.remove()
-    }
-  }, [])
 
   /* ---------- Scroll reveal ---------- */
   useEffect(() => {

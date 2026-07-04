@@ -1,4 +1,7 @@
-import { useState, useEffect, Suspense, lazy, useContext } from "react"
+'use client'
+
+import { useState, useEffect, Suspense, useContext } from "react"
+import dynamic from "next/dynamic"
 import QRApp from "./QRApp"
 import TicTacToe from "./TicTacToe"
 import Calculator from "./Calculator"
@@ -6,7 +9,7 @@ import Connect4 from "./Connect4"
 import SpinnerSVG from "../components/componentassets/SpinnerSVG"
 import AppContext from "../AppContext"
 
-const EmulatedControls = lazy(() => import("./EmulatedControls"))
+const EmulatedControls = dynamic(() => import("./EmulatedControls"), { ssr: false })
 
 export default function Apps() {
   const { setAppFullscreen } = useContext(AppContext)

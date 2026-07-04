@@ -1,11 +1,14 @@
+'use client'
+
 import { useEffect, useRef, useState } from "react"
 import ComputerEmojiSVG from "../components/componentassets/ComputerEmojiSVG"
 import PhoneEmojiSVG from "../components/componentassets/PhoneEmojiSVG"
 import Confetti from "react-confetti"
 
 function useWindowSize() {
-  const [size, setSize] = useState({ width: window.innerWidth, height: window.innerHeight })
+  const [size, setSize] = useState({ width: 0, height: 0 })
   useEffect(() => {
+    setSize({ width: window.innerWidth, height: window.innerHeight })
     const onResize = () => setSize({ width: window.innerWidth, height: window.innerHeight })
     window.addEventListener("resize", onResize, { passive: true })
     return () => window.removeEventListener("resize", onResize)

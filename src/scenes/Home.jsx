@@ -1,22 +1,34 @@
-import { Suspense, lazy } from "react"
-import { useNavigate } from "react-router-dom"
-import devCon1Full from "../assets/devcon1-logo-full.png"
+'use client'
 
-const Spline = lazy(() => import('@splinetool/react-spline'))
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+
+// Spline 3D background disabled on the home page (kept for reference).
+// import dynamic from 'next/dynamic'
+// const Spline = dynamic(() => import('@splinetool/react-spline/next'), {
+//   ssr: false,
+//   loading: () => null,
+// })
 
 export default function Home() {
-  const navigate = useNavigate()
+  const router = useRouter()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => { setMounted(true) }, [])
 
   return (
     <div className="relative flex flex-col items-center w-full min-h-screen pt-[60px] justify-center overflow-hidden">
-      {/* Spline 3D Background - lazy loaded */}
-      <Suspense fallback={null}>
-        <Spline
-          scene="https://prod.spline.design/RZzHVB2S0AGzU9bg/scene.splinecode"
-          className="absolute inset-0 w-full h-full"
-          style={{ pointerEvents: 'none' }}
-        />
-      </Suspense>
+      {/* Spline 3D Background — DISABLED on home page (kept for reference).
+          Re-enable by uncommenting the block below. */}
+      {/*
+        {mounted && (
+          <Spline
+            scene="https://prod.spline.design/RZzHVB2S0AGzU9bg/scene.splinecode"
+            className="absolute inset-0 w-full h-full"
+            style={{ pointerEvents: 'none' }}
+          />
+        )}
+      */}
 
       {/* Hero Content */}
       <div className="relative z-10 flex flex-col items-center px-6 max-w-4xl mx-auto text-center">
@@ -25,7 +37,7 @@ export default function Home() {
             clipPath: "inset(4% 8% 12% 8% round 1.5rem)",
           }} className="w-56 md:w-72 lg:w-80 my-8 fade-in-up rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-red-500/20">
           <img
-            src={devCon1Full}
+            src={devCon1Full.src}
             alt="DevCon1 Solutions - Software, IT, and Custom Solutions"
             className="w-full h-auto object-cover"
           />
@@ -40,13 +52,13 @@ export default function Home() {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 fade-in-up fade-in-up-delay-3">
           <button
-            onClick={() => navigate('/contact')}
+            onClick={() => router.push('/contact')}
             className="cta-button"
           >
             Connect With Us
           </button>
           <button
-            onClick={() => navigate('/services')}
+            onClick={() => router.push('/services')}
             className="px-8 py-3.5 rounded-full font-semibold text-white/80 border border-white/20 hover:bg-white/10 hover:border-white/30 transition-all duration-300 cursor-pointer"
           >
             Our Services
