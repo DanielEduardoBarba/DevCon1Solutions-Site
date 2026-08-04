@@ -10,10 +10,9 @@ import Chat from './Chat'
 const MENU_OPTIONS = [
   { label: 'Home',       path: '/' },
   { label: 'Services',   path: '/services' },
-  { label: 'About Us',   path: '/about' },
+  { label: 'Showcase',   path: '/showcase' },
   { label: 'Apps',       path: '/apps' },
-  { label: 'Markour',    path: '/markour' },
-  { label: 'Marksman',   path: '/marksman' },
+  { label: 'About Us',   path: '/about' },
   { label: 'Contact Us', path: '/contact' },
 ]
 

@@ -203,6 +203,10 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  /* clip-to-text only paints inside the box — pad it below the baseline so
+     descenders (g, y, p) aren't cut off at tight line-heights */
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
 }
 
 /* Keep all clipped/gradient headings bright when the browser forces its own
@@ -277,6 +281,8 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
 }
 
 /* Subtle whiteboard grid backdrop */
@@ -581,12 +587,16 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
 }
 .ms-gradient-gold {
   background: linear-gradient(120deg, #ffe6b0 0%, #ffb347 55%, #ff7a3d 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
 }
 
 /* Rangecard / reticle backdrop */
@@ -820,4 +830,474 @@
   color: #ffd2cc;
   background: rgba(255, 77, 61, 0.16);
   border: 1px solid rgba(255, 77, 61, 0.35);
+}
+
+/* =====================================================================
+   Showcase — full-bleed product ribbons
+   Each ribbon reuses its product page's own background gradient and grid
+   pattern. The two ribbons drift in opposite directions and meet at a
+   single glowing seam. Their hero device tiles are deliberately taller
+   than the ribbon band and vertically centered, so they spill past the
+   top/bottom edge and pop through the seam into the neighboring ribbon —
+   vibrant, dimensional, unmistakably alive.
+   ===================================================================== */
+.sc-ribbons {
+  position: relative;
+  margin-top: 8px;
+}
+
+.sc-ribbon {
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
+  height: 232px;
+  overflow: visible;
+  /* No z-index here — the ribbon must NOT create a stacking context, so
+     its children can layer freely against the sibling seam line */
+}
+@media (min-width: 640px)  { .sc-ribbon { height: 262px; } }
+@media (min-width: 1024px) { .sc-ribbon { height: 296px; } }
+
+.sc-ribbon-ms { margin-top: -3px; }
+
+.sc-ribbon-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.sc-ribbon-mk .sc-ribbon-bg {
+  background: linear-gradient(135deg, #050c18 0%, #081627 32%, #06121f 64%, #04101d 100%);
+}
+.sc-ribbon-mk .sc-ribbon-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(120, 190, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(120, 190, 255, 0.08) 1px, transparent 1px);
+  background-size: 34px 34px;
+}
+.sc-ribbon-ms .sc-ribbon-bg {
+  background: linear-gradient(135deg, #120607 0%, #1a0806 32%, #140505 64%, #0d0404 100%);
+}
+.sc-ribbon-ms .sc-ribbon-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 150, 130, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 150, 130, 0.07) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+/* Ambient halo glow, echoing each product's own route-scoped theme */
+.sc-ribbon-halo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  filter: blur(60px);
+}
+.sc-ribbon-mk .sc-ribbon-halo {
+  background:
+    radial-gradient(ellipse 46% 90% at 8% 50%, rgba(45, 156, 240, 0.3), transparent 70%),
+    radial-gradient(ellipse 46% 90% at 92% 50%, rgba(79, 209, 255, 0.2), transparent 70%);
+}
+.sc-ribbon-ms .sc-ribbon-halo {
+  background:
+    radial-gradient(ellipse 46% 90% at 8% 50%, rgba(255, 77, 61, 0.3), transparent 70%),
+    radial-gradient(ellipse 46% 90% at 92% 50%, rgba(255, 179, 71, 0.2), transparent 70%);
+}
+
+/* Thin glowing seam where the two product worlds meet */
+.sc-seam {
+  position: relative;
+  left: 50%;
+  margin-left: -50vw;
+  width: 100vw;
+  height: 3px;
+  z-index: 2;
+  background: linear-gradient(
+    90deg,
+    rgba(45, 156, 240, 0) 4%,
+    rgba(45, 156, 240, 0.85) 22%,
+    rgba(255, 255, 255, 0.85) 50%,
+    rgba(255, 77, 61, 0.85) 78%,
+    rgba(255, 77, 61, 0) 96%
+  );
+  box-shadow: 0 0 26px rgba(255, 255, 255, 0.25);
+  pointer-events: none;
+}
+
+.sc-ribbon-inner {
+  position: relative;
+  height: 100%;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  overflow: visible;
+  /* Above the seam (z2): tiles and heroes pop through it, never under it */
+  z-index: 3;
+}
+@media (min-width: 640px) { .sc-ribbon-inner { padding: 0 24px; } }
+
+/* Floating app label, pinned above its ribbon, unaffected by the scroll */
+.sc-row-label {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  border-radius: 100px;
+  background: rgba(10, 11, 15, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+.sc-row-label:hover {
+  transform: translateY(-2px);
+}
+.sc-row-label-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.sc-row-label-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.01em;
+}
+.sc-row-label-tag {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  display: none;
+}
+@media (min-width: 640px) {
+  .sc-row-label-tag { display: inline; }
+}
+
+/* Alternating label corner — diagonal to its own ribbon's pinned hero,
+   and clear of the neighboring ribbon's hero spill-through */
+.sc-row-label-r {
+  top: auto;
+  bottom: 14px;
+  left: auto;
+  right: 16px;
+}
+@media (min-width: 640px) {
+  .sc-row-label { left: 24px; }
+  .sc-row-label-r { left: auto; right: 24px; }
+}
+
+/* Edge-masked scrolling viewport — horizontal fade only, never clips
+   vertically, so tall device tiles are free to spill past the ribbon.
+   The fade is asymmetric: wider on the pinned-hero side, so the carousel
+   melts away *behind* the hero device instead of at the viewport edge */
+.sc-marquee {
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
+  /* overflow-x:hidden also clips vertically — padding gives the bobbing
+     tiles headroom, negative margins cancel it out visually */
+  padding: 56px 0;
+  margin: -56px 0;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.sc-marquee-hero-r {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 72%, transparent 94%);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 72%, transparent 94%);
+}
+.sc-marquee-hero-l {
+  -webkit-mask-image: linear-gradient(90deg, transparent 6%, #000 28%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent 6%, #000 28%, #000 94%, transparent);
+}
+.sc-track {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2.5vw, 22px);
+  width: max-content;
+  will-change: transform;
+}
+.sc-track-right { animation: scRight 34s linear infinite; }
+.sc-track-left  { animation: scLeft 30s linear infinite; }
+.sc-marquee:hover .sc-track { animation-play-state: paused; }
+
+@keyframes scRight {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+@keyframes scLeft {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Independent vertical "breathing" bob — applied to a wrapper so it never
+   fights the track's own horizontal scroll transform */
+.sc-bob {
+  animation-name: scBob;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+@keyframes scBob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sc-track-right, .sc-track-left, .sc-bob { animation: none; }
+}
+
+/* Feature card — a real plate, not a pill: icon, title, one-line caption */
+.sc-card {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: clamp(172px, 44vw, 208px);
+  padding: clamp(14px, 2vw, 18px) clamp(16px, 2.2vw, 20px);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.sc-card-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid;
+}
+.sc-card-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.92);
+}
+.sc-card-caption {
+  font-size: 12px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+/* Device tiles — bigger, and deliberately taller than the ribbon band so
+   they spill past its top and bottom edge, straight through the seam */
+.sc-pop {
+  position: relative;
+  z-index: 3;
+}
+
+.sc-tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 26px;
+  background: linear-gradient(155deg, #23242c 0%, #0c0c10 100%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+/* Phone & iPad shots — cocked slightly up-and-left in 3D, shadow thrown
+   down-right, like a device held loosely in hand under top-left light */
+.sc-tile-phone {
+  width: clamp(126px, 32vw, 160px);
+  aspect-ratio: 8 / 17;
+  padding: 10px;
+  transform: perspective(1100px) rotateX(7deg) rotateY(-9deg) rotateZ(-1.6deg);
+  box-shadow:
+    22px 34px 54px -20px rgba(0, 0, 0, 0.85),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+    -1px -1px 0 rgba(255, 255, 255, 0.1);
+}
+.sc-tile-phone img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+}
+.sc-tile-pad {
+  width: clamp(196px, 50vw, 250px);
+  aspect-ratio: 25 / 19;
+  padding: 12px;
+  transform: perspective(1100px) rotateX(8deg) rotateY(-8deg) rotateZ(-1.2deg);
+  box-shadow:
+    24px 34px 56px -20px rgba(0, 0, 0, 0.85),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+    -1px -1px 0 rgba(255, 255, 255, 0.1);
+}
+.sc-tile-pad img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+.sc-tile-scope {
+  width: clamp(172px, 44vw, 220px);
+  aspect-ratio: 22 / 34;
+  background: radial-gradient(circle at 50% 42%, #14100f 0%, #0a0a0c 62%, #060606 100%);
+  border-color: rgba(255, 122, 110, 0.28);
+  padding: clamp(32px, 4.5vw, 42px);
+}
+.sc-tile-scope img {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 12px rgba(255, 77, 61, 0.55));
+}
+.sc-tile-logo {
+  width: clamp(172px, 44vw, 220px);
+  aspect-ratio: 22 / 34;
+  background: radial-gradient(circle at 50% 38%, rgba(255, 77, 61, 0.22), transparent 65%), linear-gradient(155deg, #1b1c22 0%, #0a0a0c 100%);
+  padding: clamp(34px, 5vw, 44px) clamp(24px, 3.4vw, 30px);
+}
+.sc-tile-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* =====================================================================
+   Pinned hero devices — the still points the carousel flows behind.
+   Markour: an iPhone anchored right. Marksman: a scope lens anchored
+   left. Both are taller than the ribbon, levitating gently, with a
+   soft ground shadow — continuous motion behind, calm object in front.
+   ===================================================================== */
+.sc-hero {
+  position: absolute;
+  top: 50%;
+  z-index: 6;
+  display: block;
+  text-decoration: none;
+  animation: scHeroFloat 7s ease-in-out infinite;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.sc-hero-right { right: clamp(10px, 4vw, 40px); }
+.sc-hero-left  { left: clamp(10px, 4vw, 40px); }
+.sc-hero:hover { scale: 1.03; }
+
+@keyframes scHeroFloat {
+  0%, 100% { transform: translateY(calc(-50% - 4px)); }
+  50%      { transform: translateY(calc(-50% + 4px)); }
+}
+
+/* iPhone frame — titanium edge, dynamic island, glass sheen.
+   Sized to nest inside the ribbon on phones, spill past it on desktop */
+.sc-hero-phone {
+  position: relative;
+  width: clamp(94px, 18vw, 172px);
+  aspect-ratio: 9 / 19.5;
+  padding: clamp(4px, 0.6vw, 7px);
+  border-radius: clamp(22px, 3.2vw, 38px);
+  background: linear-gradient(160deg, #4a4b52 0%, #212228 30%, #101014 70%, #2c2d33 100%);
+  box-shadow:
+    0 40px 80px -24px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(255, 255, 255, 0.14),
+    inset 0 0 2px 1px rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+.sc-hero-phone img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: clamp(21px, 2.7vw, 32px);
+  display: block;
+}
+.sc-hero-island {
+  position: absolute;
+  top: clamp(11px, 1.3vw, 16px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 34%;
+  height: clamp(9px, 1vw, 12px);
+  border-radius: 100px;
+  background: #000;
+  z-index: 2;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+.sc-hero-sheen {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.04) 18%, transparent 34%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Scope lens — a glowing objective the range scrolls behind */
+.sc-hero-lens {
+  position: relative;
+  width: clamp(108px, 17vw, 216px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(20px, 3vw, 38px);
+  background:
+    radial-gradient(circle at 34% 30%, rgba(255, 255, 255, 0.1), transparent 42%),
+    radial-gradient(circle at 50% 45%, #191113 0%, #0b0a0c 58%, #050505 100%);
+  box-shadow:
+    0 40px 80px -24px rgba(0, 0, 0, 0.9),
+    0 0 0 clamp(4px, 0.5vw, 6px) #17181d,
+    0 0 0 clamp(5px, 0.65vw, 8px) rgba(255, 122, 110, 0.35),
+    0 0 44px rgba(255, 77, 61, 0.28);
+}
+.sc-hero-lens img {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 14px rgba(255, 77, 61, 0.6));
+}
+.sc-hero-lens-ring {
+  position: absolute;
+  inset: clamp(8px, 1vw, 12px);
+  border-radius: 50%;
+  border: 1px solid rgba(255, 150, 130, 0.22);
+  pointer-events: none;
+}
+
+/* Soft ground shadow beneath each hero */
+.sc-hero-shadow {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(-30px, -2.6vw, -22px);
+  transform: translateX(-50%);
+  width: 78%;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.55), transparent 70%);
+  filter: blur(6px);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sc-hero { animation: none; transform: translateY(-50%); }
+}
+
+/* "More products" ghost pill in the closing CTA row */
+.sc-more-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.18);
 }
