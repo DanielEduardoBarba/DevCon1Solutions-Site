@@ -1017,13 +1017,25 @@
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
 }
+/* On phones the heroes occupy more of the band, so the fade-out starts
+   earlier; desktop keeps a longer visible run */
 .sc-marquee-hero-r {
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 72%, transparent 94%);
-  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 72%, transparent 94%);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 55%, transparent 88%);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 55%, transparent 88%);
 }
 .sc-marquee-hero-l {
-  -webkit-mask-image: linear-gradient(90deg, transparent 6%, #000 28%, #000 94%, transparent);
-  mask-image: linear-gradient(90deg, transparent 6%, #000 28%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent 12%, #000 45%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent 12%, #000 45%, #000 94%, transparent);
+}
+@media (min-width: 640px) {
+  .sc-marquee-hero-r {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 72%, transparent 94%);
+    mask-image: linear-gradient(90deg, transparent, #000 6%, #000 72%, transparent 94%);
+  }
+  .sc-marquee-hero-l {
+    -webkit-mask-image: linear-gradient(90deg, transparent 6%, #000 28%, #000 94%, transparent);
+    mask-image: linear-gradient(90deg, transparent 6%, #000 28%, #000 94%, transparent);
+  }
 }
 .sc-track {
   display: flex;
@@ -1067,18 +1079,18 @@
   z-index: 3;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  width: clamp(172px, 44vw, 208px);
-  padding: clamp(14px, 2vw, 18px) clamp(16px, 2.2vw, 20px);
-  border-radius: 20px;
+  gap: clamp(7px, 1.2vw, 10px);
+  width: clamp(148px, 46vw, 208px);
+  padding: clamp(12px, 2vw, 18px) clamp(14px, 2.2vw, 20px);
+  border-radius: clamp(16px, 2.4vw, 20px);
   background: rgba(255, 255, 255, 0.045);
   border: 1px solid rgba(255, 255, 255, 0.09);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
 .sc-card-icon {
-  width: 38px;
-  height: 38px;
+  width: clamp(32px, 4.4vw, 38px);
+  height: clamp(32px, 4.4vw, 38px);
   border-radius: 11px;
   display: flex;
   align-items: center;
@@ -1086,12 +1098,12 @@
   border: 1px solid;
 }
 .sc-card-title {
-  font-size: 14px;
+  font-size: clamp(13px, 1.6vw, 14px);
   font-weight: 700;
   color: rgba(255, 255, 255, 0.92);
 }
 .sc-card-caption {
-  font-size: 12px;
+  font-size: clamp(11px, 1.4vw, 12px);
   line-height: 1.4;
   color: rgba(255, 255, 255, 0.42);
 }
@@ -1107,18 +1119,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 26px;
+  border-radius: clamp(18px, 3.2vw, 26px);
   background: linear-gradient(155deg, #23242c 0%, #0c0c10 100%);
   border: 1px solid rgba(255, 255, 255, 0.09);
   box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
   overflow: hidden;
 }
 /* Phone & iPad shots — cocked slightly up-and-left in 3D, shadow thrown
-   down-right, like a device held loosely in hand under top-left light */
+   down-right, like a device held loosely in hand under top-left light.
+   Sized against the viewport: nested inside the band on phones, spilling
+   past it on tablet/desktop */
 .sc-tile-phone {
-  width: clamp(126px, 32vw, 160px);
+  width: clamp(88px, 26vw, 160px);
   aspect-ratio: 8 / 17;
-  padding: 10px;
+  padding: clamp(6px, 1.2vw, 10px);
   transform: perspective(1100px) rotateX(7deg) rotateY(-9deg) rotateZ(-1.6deg);
   box-shadow:
     22px 34px 54px -20px rgba(0, 0, 0, 0.85),
@@ -1129,12 +1143,12 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 20px;
+  border-radius: clamp(13px, 2.4vw, 20px);
 }
 .sc-tile-pad {
-  width: clamp(196px, 50vw, 250px);
+  width: clamp(140px, 42vw, 250px);
   aspect-ratio: 25 / 19;
-  padding: 12px;
+  padding: clamp(7px, 1.4vw, 12px);
   transform: perspective(1100px) rotateX(8deg) rotateY(-8deg) rotateZ(-1.2deg);
   box-shadow:
     24px 34px 56px -20px rgba(0, 0, 0, 0.85),
@@ -1145,30 +1159,110 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: clamp(8px, 1.5vw, 12px);
+}
+/* Marksman HUD tiles — range readout, impact plot, dope card. In-app
+   instrument panels instead of repeated logo art */
+.sc-tile-hud {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: clamp(6px, 1vw, 9px);
+  width: clamp(148px, 40vw, 200px);
+  aspect-ratio: 20 / 26;
+  padding: clamp(14px, 2.4vw, 20px);
+  background:
+    linear-gradient(rgba(255, 77, 61, 0.05) 1px, transparent 1px) 0 0 / 100% 22px,
+    radial-gradient(circle at 50% 0%, rgba(255, 77, 61, 0.14), transparent 60%),
+    linear-gradient(155deg, #16090a 0%, #0b0608 55%, #070506 100%);
+  border-color: rgba(255, 122, 110, 0.24);
+  font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, monospace;
+}
+.sc-hud-label {
+  font-size: clamp(9px, 1.2vw, 10px);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 179, 71, 0.75);
+}
+.sc-hud-value {
+  font-size: clamp(26px, 4vw, 34px);
+  font-weight: 700;
+  line-height: 1;
+  color: #ffe9e6;
+  text-shadow: 0 0 18px rgba(255, 77, 61, 0.45);
+}
+.sc-hud-value em {
+  font-style: normal;
+  font-size: 0.5em;
+  color: rgba(255, 255, 255, 0.45);
+  margin-left: 2px;
+}
+.sc-hud-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  font-size: clamp(10px, 1.4vw, 12px);
+  color: rgba(255, 255, 255, 0.42);
+  border-bottom: 1px dashed rgba(255, 122, 110, 0.16);
+  padding-bottom: clamp(3px, 0.5vw, 5px);
+}
+.sc-hud-row b {
+  font-weight: 600;
+  color: rgba(255, 233, 230, 0.9);
+}
+.sc-hud-row-hot,
+.sc-hud-row-hot b { color: #ffb347; }
+.sc-hud-table {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4px, 0.7vw, 6px);
+}
+.sc-hud-foot {
+  margin-top: auto;
+  font-size: clamp(9px, 1.2vw, 10px);
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.35);
+}
+.sc-hud-hit { color: #7dff9a; text-shadow: 0 0 10px rgba(125, 255, 154, 0.5); }
+
+/* Impact plot — rings, crosshair, grouped hits */
+.sc-hud-plot {
+  position: relative;
+  flex: 1;
   border-radius: 12px;
+  border: 1px solid rgba(255, 122, 110, 0.18);
+  background: radial-gradient(circle at 50% 50%, rgba(255, 77, 61, 0.08), transparent 70%);
+  overflow: hidden;
 }
-.sc-tile-scope {
-  width: clamp(172px, 44vw, 220px);
-  aspect-ratio: 22 / 34;
-  background: radial-gradient(circle at 50% 42%, #14100f 0%, #0a0a0c 62%, #060606 100%);
-  border-color: rgba(255, 122, 110, 0.28);
-  padding: clamp(32px, 4.5vw, 42px);
+.sc-hud-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(255, 122, 110, 0.3);
+  border-radius: 50%;
 }
-.sc-tile-scope img {
-  width: 100%;
-  height: 100%;
-  filter: drop-shadow(0 0 12px rgba(255, 77, 61, 0.55));
+.sc-hud-ring-1 { width: 38%; aspect-ratio: 1; }
+.sc-hud-ring-2 { width: 74%; aspect-ratio: 1; border-color: rgba(255, 122, 110, 0.16); }
+.sc-hud-cross-h, .sc-hud-cross-v {
+  position: absolute;
+  background: rgba(255, 122, 110, 0.2);
 }
-.sc-tile-logo {
-  width: clamp(172px, 44vw, 220px);
-  aspect-ratio: 22 / 34;
-  background: radial-gradient(circle at 50% 38%, rgba(255, 77, 61, 0.22), transparent 65%), linear-gradient(155deg, #1b1c22 0%, #0a0a0c 100%);
-  padding: clamp(34px, 5vw, 44px) clamp(24px, 3.4vw, 30px);
+.sc-hud-cross-h { left: 6%; right: 6%; top: 50%; height: 1px; }
+.sc-hud-cross-v { top: 6%; bottom: 6%; left: 50%; width: 1px; }
+.sc-hud-dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ff4d3d;
+  box-shadow: 0 0 8px rgba(255, 77, 61, 0.8);
+  transform: translate(-50%, -50%);
 }
-.sc-tile-logo img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+.sc-hud-dot-gold {
+  background: #ffb347;
+  box-shadow: 0 0 10px rgba(255, 179, 71, 0.9);
 }
 
 /* =====================================================================
@@ -1185,6 +1279,17 @@
   text-decoration: none;
   animation: scHeroFloat 7s ease-in-out infinite;
   transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* Soft vignette so the hero reads as a separate layer above the stream */
+.sc-hero::before {
+  content: '';
+  position: absolute;
+  inset: -22%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.5), transparent 68%);
+  filter: blur(12px);
+  z-index: -1;
+  pointer-events: none;
 }
 .sc-hero-right { right: clamp(10px, 4vw, 40px); }
 .sc-hero-left  { left: clamp(10px, 4vw, 40px); }

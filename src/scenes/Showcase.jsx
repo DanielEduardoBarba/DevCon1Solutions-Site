@@ -76,13 +76,13 @@ const MARKOUR_ITEMS = [
 ]
 
 const MARKSMAN_ITEMS = [
-  { type: "tile", kind: "scope" },
+  { type: "tile", kind: "range" },
   { type: "feature", icon: Icon.Bullet, title: "Real Ballistics", caption: "Drop & drift, modeled per caliber.", color: RED },
   { type: "feature", icon: Icon.Wind, title: "Wind & Range", caption: "Dial your turrets, 50 to 3000 m.", color: GOLD },
-  { type: "tile", kind: "logo" },
+  { type: "tile", kind: "plot" },
   { type: "feature", icon: Icon.Zap, title: "Recoil & Flash", caption: "Muzzle flash, smoke, procedural kick.", color: "#ff7a6e" },
   { type: "feature", icon: Icon.Target, title: "Impact Tracking", caption: "Every round plotted and graded.", color: "#ff9147" },
-  { type: "tile", kind: "scope" },
+  { type: "tile", kind: "dope" },
   { type: "feature", icon: Icon.Volume, title: "Positional Audio", caption: "Distance-delayed hits, downrange.", color: GOLD },
 ]
 
@@ -120,14 +120,49 @@ function DeviceTile({ kind, src, alt, i }) {
           <img src={src} alt={alt} loading="lazy" />
         </div>
       )}
-      {kind === "scope" && (
-        <div className="sc-tile sc-tile-scope">
-          <img src="/marksman/scope.svg" alt="Marksman scoped reticle" loading="lazy" />
+      {kind === "range" && (
+        <div className="sc-tile sc-tile-hud" aria-label="Marksman range readout">
+          <span className="sc-hud-label">Target</span>
+          <span className="sc-hud-value">1,250<em>m</em></span>
+          <div className="sc-hud-row">
+            <span>Wind</span><b>4.2 m/s →</b>
+          </div>
+          <div className="sc-hud-row">
+            <span>Elev</span><b>+8.4 MIL</b>
+          </div>
+          <div className="sc-hud-row">
+            <span>Lead</span><b>0.6 MIL</b>
+          </div>
+          <span className="sc-hud-foot sc-hud-hit">● HIT — ring steel</span>
         </div>
       )}
-      {kind === "logo" && (
-        <div className="sc-tile sc-tile-logo">
-          <img src="/marksman/marksman-logo.svg" alt="Marksman" loading="lazy" />
+      {kind === "plot" && (
+        <div className="sc-tile sc-tile-hud" aria-label="Marksman impact plot">
+          <span className="sc-hud-label">Impact Plot</span>
+          <div className="sc-hud-plot">
+            <span className="sc-hud-ring sc-hud-ring-1" />
+            <span className="sc-hud-ring sc-hud-ring-2" />
+            <span className="sc-hud-cross-h" /><span className="sc-hud-cross-v" />
+            <span className="sc-hud-dot" style={{ left: "46%", top: "38%" }} />
+            <span className="sc-hud-dot" style={{ left: "58%", top: "52%" }} />
+            <span className="sc-hud-dot" style={{ left: "41%", top: "57%" }} />
+            <span className="sc-hud-dot sc-hud-dot-gold" style={{ left: "51%", top: "47%" }} />
+            <span className="sc-hud-dot" style={{ left: "63%", top: "41%" }} />
+          </div>
+          <span className="sc-hud-foot">5 rds — 0.8 MOA</span>
+        </div>
+      )}
+      {kind === "dope" && (
+        <div className="sc-tile sc-tile-hud" aria-label="Marksman dope card">
+          <span className="sc-hud-label">Dope Card — .338</span>
+          <div className="sc-hud-table">
+            <div className="sc-hud-row"><span>600 m</span><b>3.1 MIL</b></div>
+            <div className="sc-hud-row"><span>900 m</span><b>6.0 MIL</b></div>
+            <div className="sc-hud-row sc-hud-row-hot"><span>1200 m</span><b>9.4 MIL</b></div>
+            <div className="sc-hud-row"><span>1500 m</span><b>13.6 MIL</b></div>
+            <div className="sc-hud-row"><span>1800 m</span><b>18.9 MIL</b></div>
+          </div>
+          <span className="sc-hud-foot">G7 · 2.5°C · 1013 hPa</span>
         </div>
       )}
     </div>
