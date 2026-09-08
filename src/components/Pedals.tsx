@@ -3,7 +3,17 @@
 import { useState } from "react"
 
 
-export default function Pedals({ w, h, accelFx = () => { }, brakeFx = () => { } }) {
+export default function Pedals({
+  w = 120,
+  h,
+  accelFx = () => {},
+  brakeFx = () => {},
+}: {
+  w?: number
+  h: number
+  accelFx?: () => void
+  brakeFx?: () => void
+}) {
     const [pressed, setPressed]=useState(0)
     return (
         <svg xmlns="http://www.w3.org/2000/svg"

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from "react"
-import { QRCode } from "react-qr-code"
+import QRCode from "react-qr-code"
 import html2canvas from "html2canvas"
 import DownloadSVG from "../components/componentassets/DownloadSVG"
 import SpinnerSVG from "../components/componentassets/SpinnerSVG"

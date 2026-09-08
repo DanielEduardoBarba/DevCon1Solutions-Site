@@ -4,11 +4,21 @@ import { useContext, useEffect, useState } from "react";
 import AppContext from "../AppContext";
 
 
-export default function Steering({ w, h, turnFx = () => { } }) {
+export default function Steering({
+  w,
+  h,
+  turnFx = () => {},
+}: {
+  w: number
+  h: number
+  turnFx?: (delta: number) => void
+}) {
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [rotation, setRotation] = useState(0)
 
-    const { setLockScroll } = useContext(AppContext)
+    const { setLockScroll } = useContext(AppContext) as {
+      setLockScroll?: (v: boolean) => void
+    }
 
     useEffect(() => {
         console.log(position)
@@ -28,12 +38,12 @@ export default function Steering({ w, h, turnFx = () => { } }) {
     }
     return (
         <svg xmlns="http://www.w3.org/2000/svg"
-            onMouseLeave={() => setLockScroll(false)}
-            onTouchEnd={() => setLockScroll(false)}
+            onMouseLeave={() => setLockScroll?.(false)}
+            onTouchEnd={() => setLockScroll?.(false)}
             onTouchMove={handleTouchMove}
             onMouseMove={handleMouseMove}
             onMouseDown={handleMouseMove}
-            onTouchStart={() => setLockScroll(true)}
+            onTouchStart={() => setLockScroll?.(true)}
             style={{
                 transform: `rotate(${rotation}deg)`
             }}

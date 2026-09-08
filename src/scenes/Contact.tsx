@@ -69,11 +69,14 @@ export default function Contact() {
     if (isSent) return
     setIsSent(true)
 
-    const pkg = { ...form, key: API_KEY }
+    const pkg = { ...form, ...(API_KEY ? { key: API_KEY } : {}) }
 
     fetch(`${server()}/devcon/contact/form`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        ...(API_KEY ? { "X-API-Key": API_KEY } : {}),
+      },
       body: JSON.stringify(pkg),
     })
       .then((incoming) => {

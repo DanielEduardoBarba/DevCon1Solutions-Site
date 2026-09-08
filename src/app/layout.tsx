@@ -38,7 +38,11 @@ export const metadata = {
   alternates: { canonical: BASE_URL },
 }
 
-export default function RootLayout({ children }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en" style={{ colorScheme: 'dark' }}>
       <head>
